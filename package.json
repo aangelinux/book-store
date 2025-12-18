@@ -1,0 +1,14 @@
+{
+  "name": "book-store",
+  "version": "1.0.0",
+  "description": "Bookstore Web Application.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js"
+  },
+  "author": "Angelina Larsson",
+  "license": "MIT",
+  "devDependencies": {
+    "express": "^5.2.1"
+  }
+}

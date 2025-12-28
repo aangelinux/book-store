@@ -1,11 +1,7 @@
 /**
- * Handles searches for books and adding books to the cart.
+ * Handles searching for books in the database.
  */
 
 export function getBooks() {
 
-}
-
-export function addBook() {
-	
 }

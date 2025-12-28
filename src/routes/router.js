@@ -4,7 +4,7 @@
 
 import express from 'express'
 import { login, logout, register } from '../controllers/auth.js'
-import { getBooks, addBook } from "../controllers/books.js"
+import { getBooks } from "../controllers/books.js"
 import { checkout } from '../controllers/order.js'
 
 const router = express.Router()

@@ -3,6 +3,8 @@
  */
 
 export async function login(req, res, next) {
+	//Add validation!
+
 	res.status(201).send({
 		message: 'User logged in successfully!',
 	})
@@ -15,6 +17,8 @@ export async function logout(req, res, next) {
 }
 
 export async function register(req, res, next) {
+	//Add validation!
+	
 	res.status(201).send({
 		message: 'User created successfully!',
 	})

@@ -2,14 +2,20 @@
  * Handles login, logout, and registering.
  */
 
-export function login() {
-
+export async function login(req, res, next) {
+	res.status(201).send({
+		message: 'User logged in successfully!',
+	})
 }
 
-export function logout() {
-
+export async function logout(req, res, next) {
+	res.status(201).send({
+		message: 'User logged out successfully!',
+	})
 }
 
-export function register() {
-
+export async function register(req, res, next) {
+	res.status(201).send({
+		message: 'User created successfully!',
+	})
 }

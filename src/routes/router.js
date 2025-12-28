@@ -9,13 +9,13 @@ import { checkout } from '../controllers/order.js'
 
 const router = express.Router()
 
-router.post('/auth/login', login)
-router.post('/auth/register', register)
-router.post('/auth/logout', logout)
+router.post('/auth/login', (req, res, next) => login(req, res, next))
+router.post('/auth/register', (req, res, next) => register(req, res, next))
+router.post('/auth/logout', (req, res, next) => logout(req, res, next))
 
-router.get('/books', getBooks)
-router.post('/books', addBook)
+router.get('/books', (req, res, next) => getBooks(req, res, next))
+router.post('/books', (req, res, next) => addBook(req, res, next))
 
-router.post('/order', checkout)
+router.post('/order', (req, res, next) => checkout(req, res, next))
 
 export default router

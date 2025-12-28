@@ -64,20 +64,20 @@ customElements.define('home-page',
 		}
 
 		connectedCallback() {
-			this.#loginBtn.addEventListener('click', this.#login)
-			this.#registerBtn.addEventListener('click', this.#register)
+			this.#loginBtn.addEventListener('click', this.#openLogin)
+			this.#registerBtn.addEventListener('click', this.#openRegister)
 		}
 
 		disconnectedCallback() {
 			this.abortController.abort()
 		}
 
-		#login() {
+		#openLogin() {
 			this.dispatchEvent(new CustomEvent('open-login', 
 				{ bubbles: true, composed: true }))
 		}
 
-		#register() {
+		#openRegister() {
 			this.dispatchEvent(new CustomEvent('open-register', 
 				{ bubbles: true, composed: true }))
 		}

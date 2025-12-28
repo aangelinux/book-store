@@ -40,7 +40,7 @@ template.innerHTML = `
 			font-weight: bold;
 			font-family: 'Monaco', monospace;
 			font-size: 1.2rem;
-			width: 200px;
+			width: 400px;
 			height: 40px;
 			margin-bottom: 10px;
 			border-radius: 5px;
@@ -90,10 +90,12 @@ customElements.define('login-form',
 		}
 
 		#login() {
-			const email = this.#email.value
-			const password = this.#password.value
+			const memberInfo = {
+				email: this.#email.value,
+				password: this.#password.value
+			}
 
-			if (login(email, password)) {
+			if (login(memberInfo)) {
 				this.dispatchEvent(new CustomEvent('open-search', {
 					bubbles: true, composed: true
 				}))

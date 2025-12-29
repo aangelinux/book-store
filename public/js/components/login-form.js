@@ -90,10 +90,10 @@ customElements.define('login-form',
 		}
 
 		#login() {
-			const memberInfo = {
-				email: this.#email.value,
-				password: this.#password.value
-			}
+			const memberInfo = [
+				this.#email.value,
+				this.#password.value
+			]
 
 			if (login(memberInfo)) {
 				this.dispatchEvent(new CustomEvent('open-search', {

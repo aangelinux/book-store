@@ -70,13 +70,13 @@ template.innerHTML = `
 			<input type="text" id="zip" name="zip"><br>
 
 			<label for="phone">Phone number:</label><br>
-			<input type="text" id="phone" name="phone"><br>
+			<input type="tel" id="phone" name="phone"><br>
 
 			<label for="email">Email:</label><br>
-			<input type="text" id="email" name="email"><br>
+			<input type="email" id="email" name="email"><br>
 
 			<label for="password">Password:</label><br>
-			<input type="text" id="password" name="password">
+			<input type="password" id="password" name="password">
 		</form>
 		<button id="registerBtn">Register</button>
 	</div>
@@ -97,29 +97,38 @@ customElements.define('register-form',
 		}
 
 		connectedCallback() {
-			this.#registerBtn.addEventListener('click', () => this.#register())
+			this.#registerBtn.addEventListener('click', () => {
+				const memberInfo = this.#getInfo()
+				this.#register(memberInfo)
+			})
 		}
 
 		disconnectedCallback() {
 			this.abortController.abort()
 		}
 
-		#register() {
-			const memberInfo = {
-				fname: this.shadowRoot.getElementById('fname').value,
-				lname: this.shadowRoot.getElementById('lname').value,
-				address: this.shadowRoot.getElementById('address').value,
-				city: this.shadowRoot.getElementById('city').value,
-				zip: this.shadowRoot.getElementById('zip').value,
-				phone: this.shadowRoot.getElementById('phone').value,
-				email: this.shadowRoot.getElementById('email').value,
-				password: this.shadowRoot.getElementById('password').value,
-			}
+		#getInfo() {
+			return [
+				this.shadowRoot.getElementById('fname').value,
+				this.shadowRoot.getElementById('lname').value,
+				this.shadowRoot.getElementById('address').value,
+				this.shadowRoot.getElementById('city').value,
+				this.shadowRoot.getElementById('zip').value,
+				this.shadowRoot.getElementById('phone').value,
+				this.shadowRoot.getElementById('email').value,
+				this.shadowRoot.getElementById('password').value,
+			]
+		}
 
-			if (register(memberInfo)) {
+		async #register(memberInfo) {
+			try {
+				await register(memberInfo)
 				this.dispatchEvent(new CustomEvent('open-search', {
 					bubbles: true, composed: true
 				}))
+			} catch (error) {
+				alert(error.details.errors)
+				console.log(error.details.errors)
 			}
 		}
 	}

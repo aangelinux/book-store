@@ -3,11 +3,20 @@
  */
 
 export async function register(memberInfo) {
-	return fetch('/auth/register', {
+	const res = await fetch('/auth/register', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(memberInfo)
 	})
+
+	const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message || 'Registration failed')
+    error.details = result
+    throw error
+  }
+
+	return result
 }
 
 export async function login(memberInfo) {

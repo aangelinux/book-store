@@ -6,9 +6,9 @@ import path from 'path'
 import dotenv from 'dotenv'
 import express from 'express'
 import router from './routes/router.js'
+import db from './config/db.js'
 import { fileURLToPath } from 'url'
 import { errorHandler } from './middleware/errorHandler.js'
-import { connectDB } from './config/db.js'
 
 dotenv.config()
 
@@ -23,14 +23,19 @@ app.use('/', router)
 app.use(errorHandler)
 
 async function start() {
-	await connectDB()
+	await db.getConnection()
+		.then(() => console.log('Database connected succesfully!'))
+		.catch((error) => {
+			console.error('Database failed to connect: ', error)
+			process.exit(1)
+		})
 
 	app.listen(process.env.PORT, () => {
-    console.log(`Server running at PORT ${process.env.PORT}`)	
+    console.log(`Server running on PORT ${process.env.PORT}`)	
 	})
 }
 
 start().catch(error => {
-	console.error("Error starting app: ", error)
+	console.error('Error starting app: ', error)
 	process.exit(1)
 })

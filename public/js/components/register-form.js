@@ -108,16 +108,16 @@ customElements.define('register-form',
 		}
 
 		#getInfo() {
-			return [
-				this.shadowRoot.getElementById('fname').value,
-				this.shadowRoot.getElementById('lname').value,
-				this.shadowRoot.getElementById('address').value,
-				this.shadowRoot.getElementById('city').value,
-				this.shadowRoot.getElementById('zip').value,
-				this.shadowRoot.getElementById('phone').value,
-				this.shadowRoot.getElementById('email').value,
-				this.shadowRoot.getElementById('password').value,
-			]
+			return {
+				fname: this.shadowRoot.getElementById('fname').value,
+				lname: this.shadowRoot.getElementById('lname').value,
+				address: this.shadowRoot.getElementById('address').value,
+				city: this.shadowRoot.getElementById('city').value,
+				zip: this.shadowRoot.getElementById('zip').value,
+				phone: this.shadowRoot.getElementById('phone').value,
+				email: this.shadowRoot.getElementById('email').value,
+				password: this.shadowRoot.getElementById('password').value,
+			}
 		}
 
 		async #register(memberInfo) {
@@ -127,7 +127,7 @@ customElements.define('register-form',
 					bubbles: true, composed: true
 				}))
 			} catch (error) {
-				alert(error.details.errors)
+				alert(JSON.stringify(error.details.errors)) //TODO: make user-friendly
 				console.log(error.details.errors)
 			}
 		}

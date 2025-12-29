@@ -26,9 +26,9 @@ export const registerValidator = [
     .isLength({ max: 30 }).withMessage('City cannot be longer than 30 chars'),
 
   body('zip')
-    .trim()
+		.customSanitizer(value => value.replace(/\s+/g, ""))
     .notEmpty().withMessage('ZIP code is required')
-    .isInt().withMessage('ZIP code must contain only numbers'),
+    .isInt().withMessage('ZIP code must only contain numbers'),
 
   body('phone')
     .optional()

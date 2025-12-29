@@ -6,8 +6,19 @@ import db from '../config/db.js'
 
 export default class Member {
 	static async insert(memberInfo) {
+		const { fname, lname, address, city, zip, phone, email, password } = memberInfo
+		
 		const query = 'INSERT INTO Members (fname, lname, address, city, zip, phone, email, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
-		const [result] = await db.query(query, memberInfo)
+		const [result] = await db.query(query, [
+			fname,
+			lname,
+			address,
+			city,
+			zip,
+			phone,
+			email,
+			password
+		])
 
 		return result
 	}

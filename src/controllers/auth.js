@@ -3,6 +3,7 @@
  */
 
 import { validationResult } from 'express-validator'
+import bcrypt from 'bcrypt'
 import Member from '../models/member.js'
 
 function isValid(req, res) {
@@ -26,6 +27,11 @@ export async function login(req, res, next) {
 		return res.status(401).json({ errors: 'Invalid email or password.' })
 	}
 
+	const match = await bcrypt.compare(password, member.password)
+	if (!match) {
+		return res.status(401).json({ errors: 'Invalid email or password.' })
+	}
+
 	req.session.userId = member.id
 	res.status(201).send({
 		message: 'User logged in successfully!',
@@ -46,7 +52,8 @@ export async function register(req, res, next) {
 	if (!isValid(req, res)) return
 
   try {
-		const result = await Member.insert(req.body)
+		const hashedPassword = await bcrypt.hash(req.body.password, 12)
+		const result = await Member.insert(req.body, hashedPassword)
 		res.status(201).json({
 			message: 'Member registered successfully!',
 			memberId: result.insertId

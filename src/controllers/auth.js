@@ -19,16 +19,26 @@ function isValid(req, res) {
 }
 
 export async function login(req, res, next) {
-	//Add validation!
+	const { email, password } = req.body
 
+	const member = await Member.findByEmail(email)
+	if (!member) {
+		return res.status(401).json({ errors: 'Invalid email or password.' })
+	}
+
+	req.session.userId = member.id
 	res.status(201).send({
 		message: 'User logged in successfully!',
 	})
 }
 
 export async function logout(req, res, next) {
-	res.status(201).send({
-		message: 'User logged out successfully!',
+	if (!req.session) return
+
+	req.session.destroy(() => {
+		res.status(201).send({
+			message: 'User logged out successfully!',
+		})
 	})
 }
 

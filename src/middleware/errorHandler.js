@@ -49,10 +49,6 @@ export const registerValidator = [
     .isLength({ max: 200 }).withMessage('Password cannot be longer than 200 chars'),
 ]
 
-export const loginValidator = [
-	
-]
-
 export function errorHandler(err, req, res, next) {
 	console.error(err)
 

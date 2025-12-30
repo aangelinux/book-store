@@ -20,11 +20,20 @@ export async function register(memberInfo) {
 }
 
 export async function login(memberInfo) {
-	return fetch('/auth/login', {
+	const res = await fetch('/auth/login', {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(memberInfo)
 	})
+
+	const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message || 'Login failed')
+    error.details = result
+    throw error
+  }
+
+	return result
 }
 
 export async function logout() {

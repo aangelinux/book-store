@@ -5,6 +5,7 @@
 import path from 'path'
 import dotenv from 'dotenv'
 import express from 'express'
+import session from 'express-session'
 import router from './routes/router.js'
 import db from './config/db.js'
 import { fileURLToPath } from 'url'
@@ -13,12 +14,16 @@ import { errorHandler } from './middleware/errorHandler.js'
 dotenv.config()
 
 const app = express()
-
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 app.use(express.static(path.join(__dirname, '../public')))
 app.use(express.json())
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
 app.use('/', router)
 app.use(errorHandler)
 

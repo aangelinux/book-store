@@ -31,7 +31,7 @@ template.innerHTML = `
 			font-weight: bold;
 			font-family: 'Monaco', monospace;
 			font-size: 1.2rem;
-			width: 200px;
+			width: 400px;
 			height: 30px;			
 		}
 
@@ -40,7 +40,7 @@ template.innerHTML = `
 			font-weight: bold;
 			font-family: 'Monaco', monospace;
 			font-size: 1.2rem;
-			width: 400px;
+			width: 300px;
 			height: 40px;
 			margin-bottom: 10px;
 			border-radius: 5px;
@@ -89,16 +89,20 @@ customElements.define('login-form',
 			this.abortController.abort()
 		}
 
-		#login() {
-			const memberInfo = [
-				this.#email.value,
-				this.#password.value
-			]
+		async #login() {
+			const memberInfo = {
+				email: this.#email.value,
+				password: this.#password.value
+			}
 
-			if (login(memberInfo)) {
+			try {
+				await login(memberInfo)
 				this.dispatchEvent(new CustomEvent('open-search', {
 					bubbles: true, composed: true
 				}))
+			} catch (error) {
+				alert(error.details.errors)
+				console.log(error.details.errors)
 			}
 		}
 	}

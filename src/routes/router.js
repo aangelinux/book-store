@@ -3,14 +3,14 @@
  */
 
 import express from 'express'
-import { registerValidator, loginValidator } from '../middleware/errorHandler.js'
+import { registerValidator } from '../middleware/errorHandler.js'
 import { login, logout, register } from '../controllers/auth.js'
-import { getBooks } from "../controllers/books.js"
+import { getBooks } from "../controllers/book.js"
 import { checkout } from '../controllers/order.js'
 
 const router = express.Router()
 
-router.post('/auth/login', loginValidator, login)
+router.post('/auth/login', login)
 router.post('/auth/register', registerValidator, register)
 router.post('/auth/logout', logout)
 

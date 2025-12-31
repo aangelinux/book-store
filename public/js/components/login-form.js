@@ -57,7 +57,7 @@ template.innerHTML = `
 			<label for="email">Email:</label><br>
 			<input type="text" id="email" name="email"><br>
 			<label for="password">Password:</label><br>
-			<input type="text" id="password" name="password">
+			<input type="password" id="password" name="password">
 		</form>
 		<button id="login">Log In</button>
 	</div>

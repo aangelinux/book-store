@@ -1,5 +1,5 @@
 /**
- * API calls to the backend.
+ * All API calls to the backend.
  */
 
 export async function register(memberInfo) {
@@ -40,6 +40,19 @@ export async function logout() {
 	return fetch('/auth/logout', {
 		method: 'POST'
 	})
+}
+
+export async function retrieveBooks(input) {
+	const res = await fetch(`/books?type=${input.type}&value=${input.value}`)
+
+	const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message || 'Could not retrieve books')
+    error.details = result
+    throw error
+  }
+
+	return result
 }
 
 export async function order() {

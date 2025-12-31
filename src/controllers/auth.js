@@ -1,5 +1,5 @@
 /**
- * Handles login, logout, and registering.
+ * Handles all forms of member authorization and registration.
  */
 
 import { validationResult } from 'express-validator'
@@ -17,6 +17,27 @@ function isValid(req, res) {
 		return false
 	}
 	return true
+}
+
+export async function register(req, res, next) {
+	if (!isValid(req, res)) return
+
+  try {
+		const hashedPassword = await bcrypt.hash(req.body.password, 12)
+		const result = await Member.insert(req.body, hashedPassword)
+		res.status(201).json({
+			message: 'Member registered successfully!',
+			memberId: result.insertId
+		})
+	} catch (error) {
+		if (error.code === 'ER_DUP_ENTRY') {
+			return res.status(400).json({
+				errors: 'A member with this email already exists. Please use a different email.',
+			})
+		}
+		console.error('Error registering member: ', error.message)
+		res.status(500).json({ error: 'Failed to register member' })
+	}
 }
 
 export async function login(req, res, next) {
@@ -46,25 +67,4 @@ export async function logout(req, res, next) {
 			message: 'User logged out successfully!',
 		})
 	})
-}
-
-export async function register(req, res, next) {
-	if (!isValid(req, res)) return
-
-  try {
-		const hashedPassword = await bcrypt.hash(req.body.password, 12)
-		const result = await Member.insert(req.body, hashedPassword)
-		res.status(201).json({
-			message: 'Member registered successfully!',
-			memberId: result.insertId
-		})
-	} catch (error) {
-		if (error.code === 'ER_DUP_ENTRY') {
-			return res.status(400).json({
-				errors: 'A member with this email already exists. Please use a different email.',
-			})
-		}
-		console.error('Error registering member: ', error.message)
-		res.status(500).json({ error: 'Failed to register member' })
-	}
 }

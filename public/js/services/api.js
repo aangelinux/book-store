@@ -42,8 +42,8 @@ export async function logout() {
 	})
 }
 
-export async function retrieveBooks(input) {
-	const res = await fetch(`/books?type=${input.type}&value=${input.value}`)
+export async function retrieveBooks(input, page = 1) {
+	const res = await fetch(`/books?type=${input.type}&value=${input.value}&page=${page}`)
 
 	const result = await res.json()
   if (!res.ok) {
@@ -52,6 +52,7 @@ export async function retrieveBooks(input) {
     throw error
   }
 
+	console.log(result)
 	return result
 }
 

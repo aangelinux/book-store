@@ -50,6 +50,18 @@ template.innerHTML = `
 		button:hover {
 			cursor: pointer;
 		}
+
+		#paginationButtons {
+			display: flex;
+			flex-direction: row;
+		}
+
+		#pageInfo {
+			align-self: center;
+			font-weight: bold;
+			font-family: 'Monaco', monospace;
+			font-size: 1.2rem;
+		}
 	</style>
 
 	<div>
@@ -69,11 +81,19 @@ template.innerHTML = `
 		</form>
 
 		<h2>Books</h2>
+		<div id="paginationButtons">
+			<button id="prev">Previous page</button>
+			<button id="next">Next page</button>
+		</div>
 	</div>
 `
 
 customElements.define('search-page', 
 	class SearchPage extends HTMLElement {
+		#currentSearch = { type: '', value: '' }
+		#currentPage = 1
+		#prevBtn
+		#nextBtn
 		#subject
 		#subjectBtn
 		#author
@@ -88,6 +108,8 @@ customElements.define('search-page',
 				.appendChild(template.content.cloneNode(true))
 			
 			this.abortController = new AbortController()
+			this.#prevBtn = this.shadowRoot.getElementById('prev')
+			this.#nextBtn = this.shadowRoot.getElementById('next')
 			this.#author = this.shadowRoot.getElementById('author')
 			this.#authorBtn = this.shadowRoot.getElementById('authorBtn')
 			this.#title = this.shadowRoot.getElementById('title')
@@ -98,16 +120,34 @@ customElements.define('search-page',
 
 		connectedCallback() {
 			this.#authorBtn.addEventListener('click', (e) => {
+				this.#currentPage = 1
+				this.#currentSearch = { type: 'author', value: this.#author.value }
 				e.preventDefault()
-				this.#searchBy('author', this.#author.value)
+				this.#searchBy(this.#currentSearch)
 			})
 			this.#titleBtn.addEventListener('click', (e) => {
+				this.#currentPage = 1
+				this.#currentSearch = { type: 'title', value: this.#title.value }
 				e.preventDefault()
-				this.#searchBy('title', this.#title.value)
+				this.#searchBy(this.#currentSearch)
 			})
 			this.#subjectBtn.addEventListener('click', (e) => {
+				this.#currentPage = 1
+				this.#currentSearch = { type: 'subject', value: this.#subject.value }
 				e.preventDefault()
-				this.#searchBy('subject', this.#subject.value)
+				this.#searchBy(this.#currentSearch)
+			})
+			this.#prevBtn.addEventListener('click', (e) => {
+				if (this.#currentPage > 1) {
+					this.#currentPage--
+					e.preventDefault()
+					this.#searchBy(this.#currentSearch)
+				}
+			})
+			this.#nextBtn.addEventListener('click', (e) => {
+				this.#currentPage++
+				e.preventDefault()
+				this.#searchBy(this.#currentSearch)				
 			})
 		}
 
@@ -115,14 +155,19 @@ customElements.define('search-page',
 			this.abortController.abort()
 		}
 
-		async #searchBy(type, value) {
+		async #searchBy({ type, value }) {
 			if (value) {
 				try {
-					const { books, pages } = await retrieveBooks({ value, type })
-					this.#createListing(books)
-					this.#updatePagination(pages)
+					const res = await retrieveBooks({ value, type }, this.#currentPage)
+					if (res.books.length === 0) {
+						return alert(res.message)
+					}
+					if (this.#currentPage <= res.pages) {
+						this.#createListing(res.books)
+						this.#updatePageInfo(res.pages)
+					}
 				} catch (error) {
-					alert(error.details.errors)
+					alert(JSON.stringify(error.details.errors))
 					console.log(error.details.errors)
 				}
 			}
@@ -141,8 +186,17 @@ customElements.define('search-page',
 			})
 		}
 
-		#updatePagination(pages) {
-			console.log(pages)
+		#updatePageInfo(pages) {
+			const currentPages = this.shadowRoot.querySelector('#pageInfo')
+			if (currentPages) {
+				currentPages.remove()
+			}
+
+			const pageInfo = document.createElement('p')
+			pageInfo.textContent = `Page ${this.#currentPage} of ${pages}`
+			pageInfo.id = 'pageInfo'
+			pageInfo.className = 'pageInfo'
+			this.shadowRoot.querySelector('#paginationButtons').after(pageInfo)
 		}
 	}
 )

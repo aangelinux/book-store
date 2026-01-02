@@ -64,9 +64,9 @@ customElements.define('book-card',
 
 			this.shadowRoot.querySelector('#title').textContent = info.title
 			this.shadowRoot.querySelector('#author').textContent = `Author: ${info.author}`
-			this.shadowRoot.querySelector('#isbn').textContent = `ISBN ${info.isbn}`
-			this.shadowRoot.querySelector('#price').textContent = `Price ${info.price}`
-			this.shadowRoot.querySelector('#subject').textContent = `Subject ${info.subject}`
+			this.shadowRoot.querySelector('#isbn').textContent = `ISBN: ${info.isbn}`
+			this.shadowRoot.querySelector('#price').textContent = `Price: ${info.price}`
+			this.shadowRoot.querySelector('#subject').textContent = `Subject: ${info.subject}`
 		}
 	}
 )

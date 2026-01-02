@@ -55,6 +55,24 @@ export async function retrieveBooks(input, page = 1) {
 	return result
 }
 
-export async function order() {
+export async function addToCart(book) {
+	const res = await fetch('/cart', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(book)
+	})
 
+	const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message || 'Could not retrieve books')
+    error.details = result
+    throw error
+  }
+
+	console.log(result)
+	
+	return result
+}
+
+export async function order() {
 }

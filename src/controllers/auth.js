@@ -53,7 +53,7 @@ export async function login(req, res, next) {
 		return res.status(401).json({ errors: 'Invalid email or password.' })
 	}
 
-	req.session.userId = member.id
+	req.session.userId = member.userid
 	res.status(201).send({
 		message: 'User logged in successfully!',
 	})

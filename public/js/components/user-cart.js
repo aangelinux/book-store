@@ -1,5 +1,5 @@
 /**
- * Web component representing a member cart.
+ * Web component representing a user cart.
  */
 
 const template = document.createElement('template')
@@ -11,7 +11,7 @@ template.innerHTML = `
 	</div>
 `
 
-customElements.define('member-cart',
+customElements.define('user-cart',
 	class Cart extends HTMLElement {
 		#currentBooks
 

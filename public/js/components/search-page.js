@@ -3,6 +3,7 @@
  */
 
 import { retrieveBooks } from '../services/api.js'
+import { addToCart } from '../services/api.js'
 import '../components/book-card.js'
 
 const template = document.createElement('template')
@@ -149,6 +150,9 @@ customElements.define('search-page',
 				e.preventDefault()
 				this.#searchBy(this.#currentSearch)				
 			})
+			this.addEventListener('add-to-cart', (e) => {
+				this.#addToCart(e.detail)
+			})
 		}
 
 		disconnectedCallback() {
@@ -197,6 +201,16 @@ customElements.define('search-page',
 			pageInfo.id = 'pageInfo'
 			pageInfo.className = 'pageInfo'
 			this.shadowRoot.querySelector('#paginationButtons').after(pageInfo)
+		}
+
+		async #addToCart(details) {
+			console.log(details)
+			try {
+				await addToCart({ isbn: details.book.isbn, quantity: details.quantity })
+			} catch (error) {
+				alert(JSON.stringify(error.details.errors))
+				console.log(error.details.errors)
+			}
 		}
 	}
 )

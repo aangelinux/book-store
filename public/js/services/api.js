@@ -51,8 +51,7 @@ export async function retrieveBooks(input, page = 1) {
     error.details = result
     throw error
   }
-
-	console.log(result)
+	
 	return result
 }
 

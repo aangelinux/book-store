@@ -5,8 +5,7 @@
 import '../components/home-page.js'
 import '../components/register-form.js'
 import '../components/login-form.js'
-import '../components/search-bar.js'
-import '../components/book-list.js'
+import '../components/search-page.js'
 
 const container = document.getElementById('container')
 
@@ -25,11 +24,6 @@ document.addEventListener('open-login', () => {
 })
 
 document.addEventListener('open-search', () => {
-	const searchBar = document.createElement('search-bar')
-	show(searchBar)
-})
-
-document.addEventListener('show-booklist', () => {
-	const bookList = document.createElement('book-list')
-	show(bookList)
+	const searchPage = document.createElement('search-page')
+	show(searchPage)
 })

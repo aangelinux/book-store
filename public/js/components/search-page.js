@@ -3,6 +3,7 @@
  */
 
 import { retrieveBooks } from '../services/api.js'
+import '../components/book-card.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -52,7 +53,7 @@ template.innerHTML = `
 	</style>
 
 	<div>
-		<h2>Our Books</h2>
+		<h2>Search for Books</h2>
 		<form>
 			<label for="subject">Select subject:</label><br>
 			<input type="text" id="subject" name="subject"><br>
@@ -66,11 +67,13 @@ template.innerHTML = `
 			<input type="text" id="title" name="title"><br>
 			<button id="titleBtn">Search by title</button>
 		</form>
+
+		<h2>Books</h2>
 	</div>
 `
 
-customElements.define('search-bar', 
-	class SearchBar extends HTMLElement {
+customElements.define('search-page', 
+	class SearchPage extends HTMLElement {
 		#subject
 		#subjectBtn
 		#author
@@ -96,15 +99,15 @@ customElements.define('search-bar',
 		connectedCallback() {
 			this.#authorBtn.addEventListener('click', (e) => {
 				e.preventDefault()
-				this.#searchByAuthor()
+				this.#searchBy('author', this.#author.value)
 			})
 			this.#titleBtn.addEventListener('click', (e) => {
 				e.preventDefault()
-				this.#searchByTitle()
+				this.#searchBy('title', this.#title.value)
 			})
 			this.#subjectBtn.addEventListener('click', (e) => {
 				e.preventDefault()
-				this.#searchBySubject()
+				this.#searchBy('subject', this.#subject.value)
 			})
 		}
 
@@ -112,15 +115,12 @@ customElements.define('search-bar',
 			this.abortController.abort()
 		}
 
-		async #searchByAuthor() {
-			const author = this.#author.value
-
-			if (author) {
+		async #searchBy(type, value) {
+			if (value) {
 				try {
-					await retrieveBooks({ value: author, type: 'author' })
-					this.dispatchEvent(new CustomEvent('show-booklist', {
-					bubbles: true, composed: true
-				}))
+					const { books, pages } = await retrieveBooks({ value, type })
+					this.#createListing(books)
+					this.#updatePagination(pages)
 				} catch (error) {
 					alert(error.details.errors)
 					console.log(error.details.errors)
@@ -128,36 +128,21 @@ customElements.define('search-bar',
 			}
 		}
 
-		async #searchByTitle() {
-			const title = this.#title.value
-
-			if (title) {
-				try {
-					await retrieveBooks({ value: title, type: 'title' })
-					this.dispatchEvent(new CustomEvent('show-booklist', {
-					bubbles: true, composed: true
-				}))
-				} catch (error) {
-					alert(error.details.errors)
-					console.log(error.details.errors)
-				}
+		#createListing(books) {
+			const currentBooks = this.shadowRoot.querySelectorAll('book-card')
+			if (currentBooks) {
+				currentBooks.forEach(book => { book.remove() })
 			}
+
+			books.forEach(book => {
+				const card = document.createElement('book-card')
+				card.book = book
+				this.shadowRoot.appendChild(card)
+			})
 		}
 
-		async #searchBySubject() {
-			const subject = this.#subject.value
-
-			if (subject) {
-				try {
-					await retrieveBooks({ value: subject, type: 'subject' })
-					this.dispatchEvent(new CustomEvent('show-booklist', {
-					bubbles: true, composed: true
-				}))
-				} catch (error) {
-					alert(error.details.errors)
-					console.log(error.details.errors)
-				}
-			}
+		#updatePagination(pages) {
+			console.log(pages)
 		}
 	}
 )

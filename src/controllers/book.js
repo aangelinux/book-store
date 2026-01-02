@@ -12,11 +12,11 @@ export async function getBooks(req, res, next) {
 		if (books.length === 0) {
 			return res.json({
 				message: 'No books matching search parameter',
-				data: []
+				books: []
 			})
 		}
 		return res.status(200).send({
-			data: books,
+			books,
 			pages
 		})
 	} catch (error) {

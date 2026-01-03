@@ -4,6 +4,23 @@
 
 import Cart from '../models/cart.js'
 
+export async function getCart(req, res, next) {
+	const userId = req.session.userId
+
+	try {
+		const items = await Cart.getCart(userId)
+		if (items.length === 0) {
+			return res.json({ message: 'Cart is empty' })
+		}
+		return res.status(200).send(items)
+	} catch (error) {
+		return res.status(404).send({ 
+			message: 'Cart could not be retrieved', 
+			errors: error 
+		})
+	}
+}
+
 export async function addToCart(req, res, next) {
 	const userId = req.session.userId
 

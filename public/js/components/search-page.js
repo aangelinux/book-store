@@ -63,9 +63,14 @@ template.innerHTML = `
 			font-family: 'Monaco', monospace;
 			font-size: 1.2rem;
 		}
+
+		#cart {
+		}
 	</style>
 
 	<div>
+		<button id="cart">View Cart</button>
+
 		<h2>Search for Books</h2>
 		<form>
 			<label for="subject">Select subject:</label><br>
@@ -93,6 +98,7 @@ customElements.define('search-page',
 	class SearchPage extends HTMLElement {
 		#currentSearch = { type: '', value: '' }
 		#currentPage = 1
+		#cartBtn
 		#prevBtn
 		#nextBtn
 		#subject
@@ -109,6 +115,7 @@ customElements.define('search-page',
 				.appendChild(template.content.cloneNode(true))
 			
 			this.abortController = new AbortController()
+			this.#cartBtn = this.shadowRoot.getElementById('cart')
 			this.#prevBtn = this.shadowRoot.getElementById('prev')
 			this.#nextBtn = this.shadowRoot.getElementById('next')
 			this.#author = this.shadowRoot.getElementById('author')
@@ -149,6 +156,9 @@ customElements.define('search-page',
 				this.#currentPage++
 				e.preventDefault()
 				this.#searchBy(this.#currentSearch)				
+			})
+			this.#cartBtn.addEventListener('click', (e) => {
+				this.#openCart()		
 			})
 			this.addEventListener('add-to-cart', (e) => {
 				this.#addToCart(e.detail)
@@ -204,13 +214,18 @@ customElements.define('search-page',
 		}
 
 		async #addToCart(details) {
-			console.log(details)
 			try {
 				await addToCart({ isbn: details.book.isbn, quantity: details.quantity })
 			} catch (error) {
 				alert(JSON.stringify(error.details.errors))
 				console.log(error.details.errors)
 			}
+		}
+
+		#openCart() {
+			this.dispatchEvent(new CustomEvent('open-cart', {
+				bubbles: true, composed: true
+			}))
 		}
 	}
 )

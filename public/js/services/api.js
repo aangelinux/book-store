@@ -55,6 +55,19 @@ export async function retrieveBooks(input, page = 1) {
 	return result
 }
 
+export async function getCart() {
+	const res = await fetch('/cart')
+
+	const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message || 'Could not retrieve cart')
+    error.details = result
+    throw error
+  }
+	
+	return result
+}
+
 export async function addToCart(book) {
 	const res = await fetch('/cart', {
 		method: 'POST',
@@ -68,11 +81,10 @@ export async function addToCart(book) {
     error.details = result
     throw error
   }
-
-	console.log(result)
 	
 	return result
 }
 
 export async function order() {
+	
 }

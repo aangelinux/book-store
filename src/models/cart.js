@@ -16,6 +16,17 @@ export default class Cart {
 		return result
 	}
 
+	static async getCart(userId) {
+		const query = `
+			SELECT b.isbn, b.title, b.price, c.qty 
+			FROM Cart c
+			JOIN Books b ON c.isbn = b.isbn
+			WHERE c.userid = ?`
+		const [result] = await db.query(query, userId)
+
+		return result
+	}
+
 	static async getMemberID() {
 		const query = 'SELECT userid FROM Cart'
 		const [result] = await db.query(query)

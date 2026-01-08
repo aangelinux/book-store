@@ -9,15 +9,18 @@ export default class Order {
 		const memberQuery = 'SELECT address, city, zip FROM Members WHERE userid = ?'
 		const [member] = await db.query(memberQuery, userId)
 
-		const query = `INSERT INTO Orders (userid, shipAddress, shipCity, shipZip, created)
+		const orderQuery = `INSERT INTO Orders (userid, shipAddress, shipCity, shipZip, created)
 			VALUES (?, ?, ?, ?, NOW())`
-		const [result] = await db.query(query, [
+		const [order] = await db.query(orderQuery, [
 			userId,
 			member[0].address,
 			member[0].city,
 			member[0].zip
 		])
 
-		return result
+		const query = 'SELECT * FROM Orders WHERE ono = ?'
+		const [result] = await db.query(query, order.insertId)
+
+		return result[0]
 	}
 }

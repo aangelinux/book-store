@@ -91,6 +91,8 @@ export async function order() {
     error.details = result
     throw error
   }
+
+	console.log(result)
 	
 	return result	
 }

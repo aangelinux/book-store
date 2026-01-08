@@ -13,9 +13,9 @@ export default class Order {
 			VALUES (?, ?, ?, ?, NOW())`
 		const [result] = await db.query(query, [
 			userId,
-			member.address,
-			member.city,
-			member.zip
+			member[0].address,
+			member[0].city,
+			member[0].zip
 		])
 
 		return result

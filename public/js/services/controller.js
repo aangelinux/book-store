@@ -34,8 +34,7 @@ document.addEventListener('open-cart', () => {
 	show(cart)
 })
 
-document.addEventListener('order-placed', (e) => {
+document.addEventListener('order-placed', () => {
 	const invoice = document.createElement('order-invoice')
-	invoice.setAttribute('totalPrice', e.detail)
 	show(invoice)
 })

@@ -4,7 +4,7 @@
 
 import Cart from '../models/cart.js'
 import Order from '../models/order.js'
-import OrderDetails from '../models/orderDetails.js'
+import ODetails from '../models/oDetails.js'
 
 export async function order(req, res, next) {
 	const user = req.session.userId
@@ -15,10 +15,11 @@ export async function order(req, res, next) {
 			return res.json({ message: 'Cart is empty' })
 		}
 		const order = await Order.create(user)
-		const orderDetails = await OrderDetails.create({ order: order.ono, details: items })
+		await ODetails.create({ order: order.insertId, details: items })
+
 		return res.status(201).json({ 
 			message: 'Order placed succesfully', 
-			data: { order, orderDetails } 
+			data: { order: order.insertId, items } 
 		})
 	} catch (error) {
 		return res.status(500).send({ 

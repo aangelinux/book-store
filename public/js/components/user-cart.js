@@ -147,8 +147,7 @@ customElements.define('user-cart',
 			try {
 				await order()
 				this.dispatchEvent(new CustomEvent('order-placed', {
-					detail: { total: this.#total, orderDate: Date.now() }, 
-					bubbles: true, composed: true
+					detail: this.#total, bubbles: true, composed: true
 				}))
 			} catch (error) {
 				alert(error.details.errors)

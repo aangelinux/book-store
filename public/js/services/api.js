@@ -36,12 +36,6 @@ export async function login(memberInfo) {
 	return result
 }
 
-export async function logout() {
-	return fetch('/auth/logout', {
-		method: 'POST'
-	})
-}
-
 export async function retrieveBooks(input, page = 1) {
 	const res = await fetch(`/books?type=${input.type}&value=${input.value}&page=${page}`)
 
@@ -77,7 +71,7 @@ export async function addToCart(book) {
 
 	const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Could not retrieve books')
+    const error = new Error(result.message || 'Could not add book to cart')
     error.details = result
     throw error
   }
@@ -86,5 +80,23 @@ export async function addToCart(book) {
 }
 
 export async function order() {
+	const res = await fetch('/order', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' }
+	})
+
+	const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message || 'Could not place order')
+    error.details = result
+    throw error
+  }
 	
+	return result	
+}
+
+export async function logout() {
+	return fetch('/auth/logout', {
+		method: 'POST'
+	})
 }

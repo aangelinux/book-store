@@ -7,22 +7,26 @@ import db from '../config/db.js'
 export default class ODetails {
 	static async create({ order, details }) {
 		let result = []
+		let total = []
 
-		details.forEach(async (book) => {
+		for (const book of details) {
 			const priceQuery = 'SELECT price FROM Books WHERE isbn = ?'
-			const [price] = await db.query(priceQuery, book.isbn)
+			const [priceRows] = await db.query(priceQuery, [book.isbn])
+			const amount = priceRows[0].price * book.qty
+			total.push(amount)
 			
 			const query = 'INSERT INTO ODetails (ono, isbn, qty, amount) VALUES (?, ?, ?, ?)'
 			const [orderDetails] = await db.query(query, [
 				order,
 				book.isbn,
 				book.qty,
-				(price[0].price * book.qty) 
-			]) // Need to calculate total price
-
+				amount 
+			])
 			result.push(orderDetails)
-		})
+		}
 
-		return result
+		const totalPrice = total.reduce((a, b) => a + b, 0)
+
+		return totalPrice
 	}
 }

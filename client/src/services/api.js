@@ -97,8 +97,8 @@ export async function order() {
 	return result	
 }
 
-export async function getOrder() {
-	const res = await fetch('/order')
+export async function getOrder(id) {
+	const res = await fetch(`/order:${id}`)
 
 	const result = await res.json()
   if (!res.ok) {

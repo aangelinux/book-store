@@ -71,8 +71,8 @@ customElements.define('order-invoice',
 
 		async #fetchItems() {
 			try {
-				const order = await getOrder()
-				console.log(order)
+				const ono = this.getAttribute('ono')
+				const order = await getOrder(ono)
 			} catch (error) {
 				alert(JSON.stringify(error.details.errors))
 				console.log(error.details.errors)

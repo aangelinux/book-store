@@ -23,6 +23,9 @@ export default class Order {
 	}
 
 	static async get(order) {
-		
+		const query = 'SELECT created, shipAddress, shipCity, shipZip FROM Orders WHERE ono = ?'
+		const [result] = await db.query(query, order)
+
+		return result
 	}
 }

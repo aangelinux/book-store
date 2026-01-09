@@ -26,7 +26,12 @@ export default class ODetails {
 	}
 
 	static async getItems(order) {
-		
+		let items = []
+
+		const query = 'SELECT isbn, qty, amount FROM ODetails WHERE ono = ?'
+		const [result] = await db.query(query, order)
+
+		return result
 	}
 
 	static async getTotalAmount(order) {

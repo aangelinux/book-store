@@ -34,7 +34,8 @@ document.addEventListener('open-cart', () => {
 	show(cart)
 })
 
-document.addEventListener('order-placed', () => {
+document.addEventListener('order-placed', (e) => {
 	const invoice = document.createElement('order-invoice')
+	invoice.setAttribute('ono', e.detail)
 	show(invoice)
 })

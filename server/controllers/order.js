@@ -30,5 +30,14 @@ export async function order(req, res, next) {
 }
 
 export async function getOrder(req, res, next, id) {
-
+	try {
+		const order = await Order.get(id)
+		const orderDetails = await ODetails.getItems(id)
+		console.log(order, orderDetails)
+	} catch (error) {
+		return res.status(500).send({ 
+			message: 'Order could not be retrieved', 
+			errors: error 
+		})
+	}
 }

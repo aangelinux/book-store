@@ -10,16 +10,16 @@ export async function order(req, res, next) {
 	const user = req.session.userId
 
 	try {
-		const items = await Cart.getCart(user)
-		if (items.length === 0) {
+		const details = await Cart.getCart(user)
+		if (details.length === 0) {
 			return res.json({ message: 'Cart is empty' })
 		}
 		const order = await Order.create(user)
-		const total = await ODetails.create({ order: order.ono, details: items })
+		const orderDetails = await ODetails.create({ order, details })
 
 		return res.status(201).json({ 
 			message: 'Order placed succesfully', 
-			data: { order, items, total } 
+			data: { order, orderDetails }
 		})
 	} catch (error) {
 		return res.status(500).send({ 
@@ -27,4 +27,8 @@ export async function order(req, res, next) {
 			errors: error 
 		})
 	}
+}
+
+export async function getOrder(req, res, next, id) {
+
 }

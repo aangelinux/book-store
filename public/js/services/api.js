@@ -1,5 +1,5 @@
 /**
- * All API calls to the backend.
+ * All requests to the API.
  */
 
 export async function register(memberInfo) {
@@ -95,6 +95,19 @@ export async function order() {
 	console.log(result)
 	
 	return result	
+}
+
+export async function getOrder() {
+	const res = await fetch('/order')
+
+	const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message || 'Could not retrieve order')
+    error.details = result
+    throw error
+  }
+	
+	return result
 }
 
 export async function logout() {

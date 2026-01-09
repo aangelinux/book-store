@@ -4,7 +4,7 @@
 
 import { retrieveBooks } from '../services/api.js'
 import { addToCart } from '../services/api.js'
-import '../components/book-card.js'
+import './book-card.js'
 
 const template = document.createElement('template')
 template.innerHTML = `

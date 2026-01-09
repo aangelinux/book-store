@@ -17,7 +17,8 @@ const app = express()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-app.use(express.static(path.join(__dirname, '../public')))
+app.use(express.static(path.join(__dirname, '../client/public')))
+app.use('/src', express.static(path.join(__dirname, '..', 'client', 'src')))
 app.use(express.json())
 app.use(session({
   secret: process.env.SESSION_SECRET,

@@ -31,7 +31,7 @@ export default class ODetails {
 		const query = 'SELECT isbn, qty, amount FROM ODetails WHERE ono = ?'
 		const [result] = await db.query(query, order)
 
-		for (const item of result) {
+		for (const item of result) {  // Use JOIN in query instead?
 			const bookQuery = 'SELECT title, price FROM Books WHERE isbn = ?'
 			const [book] = await db.query(bookQuery, item.isbn)
 			items.push(book[0])

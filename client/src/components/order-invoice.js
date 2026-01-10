@@ -62,7 +62,6 @@ customElements.define('order-invoice',
 
 		connectedCallback() {
 			this.#fetchItems()
-			this.#render()
 		}
 
 		disconnectedCallback() {
@@ -73,25 +72,24 @@ customElements.define('order-invoice',
 			try {
 				const ono = this.getAttribute('ono')
 				const order = await getOrder(ono)
-				console.log(order)
+				this.#render(order.data)
 			} catch (error) {
 				alert(JSON.stringify(error.details.errors))
 				console.log(error.details.errors)
 			}
-			this.#render()
 		}
 
-		#render() {
-			this.#renderBooks()
-			this.#renderOrderDetails()
-			this.#renderTitle()
+		#render(orderData) {
+			this.#renderOrder(orderData.order)
+			this.#renderBooks(orderData.orderDetails)
+			this.#renderTotal(orderData.total)
 		}
 
-		#renderOrderDetails() {
-
+		#renderOrder(order) {
+			console.log(order)
 		}
 
-		#renderBooks() {
+		#renderBooks(orderDetails) {
 			this.#books.forEach((item) => {
 				const data = Object.values(item)
 				const row = document.createElement('tr')
@@ -105,8 +103,8 @@ customElements.define('order-invoice',
 			})
 		}
 
-		#renderTitle() {
-
+		#renderTotal(total) {
+			console.log(total)
 		}
 	}
 )

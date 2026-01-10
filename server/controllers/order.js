@@ -15,11 +15,11 @@ export async function order(req, res, next) {
 			return res.json({ message: 'Cart is empty' })
 		}
 		const order = await Order.create(user)
-		const orderDetails = await ODetails.create({ order, details })
+		const orderDetails = await ODetails.create({ order: order.insertId, details })
 
 		return res.status(201).json({ 
 			message: 'Order placed succesfully', 
-			data: { order, orderDetails }
+			data: { order: order.insertId, orderDetails }
 		})
 	} catch (error) {
 		return res.status(500).send({ 
@@ -31,6 +31,7 @@ export async function order(req, res, next) {
 
 export async function getOrder(req, res, next, id) {
 	try {
+		console.log(id)
 		const order = await Order.get(id)
 		const orderDetails = await ODetails.getItems(id)
 		console.log(order, orderDetails)

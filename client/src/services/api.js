@@ -91,14 +91,12 @@ export async function order() {
     error.details = result
     throw error
   }
-
-	console.log(result)
 	
 	return result	
 }
 
 export async function getOrder(id) {
-	const res = await fetch(`/order:${id}`)
+	const res = await fetch(`/order/${id}`)
 
 	const result = await res.json()
   if (!res.ok) {

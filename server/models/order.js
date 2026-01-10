@@ -17,15 +17,15 @@ export default class Order {
 			member[0].city,
 			member[0].zip
 		])
-		const ono = order.insertId
 
-		return ono
+		return order
 	}
 
 	static async get(order) {
 		const query = 'SELECT created, shipAddress, shipCity, shipZip FROM Orders WHERE ono = ?'
 		const [result] = await db.query(query, order)
 
+		console.log(result)
 		return result
 	}
 }

@@ -29,8 +29,8 @@ template.innerHTML = `
 		<div id="invoice">
 			<h1 id="ono">Invoice for order:</h1>
 			<h2>Shipping Address</h2>
-			<p id="name"></p>
-			<p id="address></p>
+				<p id="name"></p>
+				<p id="address></p>
 			<h2>Books</h2>
 			<table>
 				<tr>
@@ -61,8 +61,8 @@ customElements.define('order-invoice',
 		}
 
 		connectedCallback() {
-			this.#render()
 			this.#fetchItems()
+			this.#render()
 		}
 
 		disconnectedCallback() {

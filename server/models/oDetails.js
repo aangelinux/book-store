@@ -26,14 +26,24 @@ export default class ODetails {
 	}
 
 	static async getItems(order) {
+		let items = []
+
 		const query = 'SELECT isbn, qty, amount FROM ODetails WHERE ono = ?'
 		const [result] = await db.query(query, order)
 
-		return result
+		for (const item of result) {
+			const bookQuery = 'SELECT title, price FROM Books WHERE isbn = ?'
+			const [book] = await db.query(bookQuery, item.isbn)
+			items.push(book[0])
+		}
+
+		return items
 	}
 
 	static async getTotalAmount(order) {
-		let amounts = []
-		const total = total.reduce((a, b) => a + b, 0)		
+		const query = 'SELECT SUM(amount) AS total FROM ODetails WHERE ono = ?'
+		const [result] = await db.query(query, order)
+		
+		return result[0]
 	}
 }

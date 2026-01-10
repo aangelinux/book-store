@@ -33,11 +33,11 @@ export async function getOrder(req, res, next) {
 	try {
 		const order = await Order.get(req.params.id)
 		const orderDetails = await ODetails.getItems(req.params.id)
-		// const total = await ODetails.getTotalAmount(req.params.id)
+		const total = await ODetails.getTotalAmount(req.params.id)
 
 		return res.status(200).json({ 
 			message: 'Order retrieved succesfully', 
-			data: { order, orderDetails }
+			data: { order, orderDetails, total }
 		})
 	} catch (error) {
 		return res.status(500).send({ 

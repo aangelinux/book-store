@@ -104,6 +104,8 @@ export async function getOrder(id) {
     error.details = result
     throw error
   }
+
+	console.log(result)
 	
 	return result
 }

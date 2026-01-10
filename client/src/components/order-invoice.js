@@ -22,6 +22,30 @@ template.innerHTML = `
 			flex-direction: column;
 			gap: 10px;
 		}
+
+		table {
+			width: 75%;
+			padding: 10px;
+			border-collapse: collapse;
+			font-family: 'Monaco', monospace;
+		}
+
+		th {
+			padding: 10px;
+			font-weight: bold;
+		}
+
+		td {
+			padding: 10px;
+		}
+
+		tr:nth-child(even) {
+			background-color: lightgray;
+		}
+
+		h1, h2, p {
+			font-family: 'Monaco', monospace;			
+		}
 	</style>
 
 	<div id="page">
@@ -30,7 +54,7 @@ template.innerHTML = `
 			<h1 id="ono">Invoice for order:</h1>
 			<h2>Shipping Address</h2>
 				<p id="name"></p>
-				<p id="address></p>
+				<p id="address"></p>
 			<h2>Books</h2>
 			<table>
 				<tr>
@@ -40,14 +64,16 @@ template.innerHTML = `
 					<th>Quantity</th>
 				</tr>
 			</table>
-			<h1 id="total">Order Total:</h2>
+			<h2 id="total">Order Total:</h2>
 		</div>
 	</div>
 `
 
 customElements.define('order-invoice', 
 	class Invoice extends HTMLElement {
-		#books = []
+		#ono
+		#name
+		#address
 		#table
 		#total
 
@@ -58,6 +84,11 @@ customElements.define('order-invoice',
 				.appendChild(template.content.cloneNode(true))
 			
 			this.abortController = new AbortController()
+			this.#ono = this.shadowRoot.querySelector('#ono')
+			this.#name = this.shadowRoot.querySelector('#name')
+			this.#address = this.shadowRoot.querySelector('#address')
+			this.#table = this.shadowRoot.querySelector('table')
+			this.#total = this.shadowRoot.querySelector('#total')
 		}
 
 		connectedCallback() {
@@ -87,10 +118,14 @@ customElements.define('order-invoice',
 
 		#renderOrder(order) {
 			console.log(order)
+			this.#ono.textContent = `Invoice for order: ${order.ono}`
+			this.#name.textContent = `Name: ${order.fname} ${order.lname}`
+			this.#address.textContent = `Address: ${order.shipAddress}, ${order.shipCity} ${order.shipZip}`
 		}
 
 		#renderBooks(orderDetails) {
-			this.#books.forEach((item) => {
+			console.log(this.#table)
+			orderDetails.forEach((item) => {
 				const data = Object.values(item)
 				const row = document.createElement('tr')
 
@@ -104,7 +139,7 @@ customElements.define('order-invoice',
 		}
 
 		#renderTotal(total) {
-			console.log(total)
+			this.#total.textContent = `Order Total: ${total.total}`
 		}
 	}
 )

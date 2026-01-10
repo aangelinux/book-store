@@ -105,6 +105,7 @@ export async function getOrder(id) {
     throw error
   }
 	
+	console.log(result)
 	return result
 }
 

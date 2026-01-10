@@ -22,7 +22,12 @@ export default class Order {
 	}
 
 	static async get(order) {
-		const query = 'SELECT created, shipAddress, shipCity, shipZip FROM Orders WHERE ono = ?'
+		const query = `
+		SELECT o.ono, o.created, o.shipAddress, o.shipCity, o.shipZip, m.fname, m.lname
+		FROM Orders o
+		JOIN Members m ON o.userid = m.userid
+		WHERE o.ono = ?
+		`
 		const [result] = await db.query(query, order)
 
 		return result[0]

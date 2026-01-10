@@ -26,18 +26,18 @@ export default class ODetails {
 	}
 
 	static async getItems(order) {
-		let items = []
-
-		const query = 'SELECT isbn, qty, amount FROM ODetails WHERE ono = ?'
+		const query = `
+			SELECT 
+				b.isbn,
+				b.title,
+				b.price,
+				od.qty
+			FROM ODetails od
+			JOIN Books b ON od.isbn = b.isbn
+			WHERE od.ono = ?`
 		const [result] = await db.query(query, order)
 
-		for (const item of result) {  // Use JOIN in query instead?
-			const bookQuery = 'SELECT title, price FROM Books WHERE isbn = ?'
-			const [book] = await db.query(bookQuery, item.isbn)
-			items.push(book[0])
-		}
-
-		return items
+		return result
 	}
 
 	static async getTotalAmount(order) {

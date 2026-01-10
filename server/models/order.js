@@ -25,7 +25,6 @@ export default class Order {
 		const query = 'SELECT created, shipAddress, shipCity, shipZip FROM Orders WHERE ono = ?'
 		const [result] = await db.query(query, order)
 
-		console.log(result)
 		return result
 	}
 }

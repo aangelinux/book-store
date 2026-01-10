@@ -73,6 +73,7 @@ customElements.define('order-invoice',
 			try {
 				const ono = this.getAttribute('ono')
 				const order = await getOrder(ono)
+				console.log(order)
 			} catch (error) {
 				alert(JSON.stringify(error.details.errors))
 				console.log(error.details.errors)

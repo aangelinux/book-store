@@ -29,12 +29,16 @@ export async function order(req, res, next) {
 	}
 }
 
-export async function getOrder(req, res, next, id) {
+export async function getOrder(req, res, next) {
 	try {
-		console.log(id)
-		const order = await Order.get(id)
-		const orderDetails = await ODetails.getItems(id)
-		console.log(order, orderDetails)
+		const order = await Order.get(req.params.id)
+		const orderDetails = await ODetails.getItems(req.params.id)
+		// const total = await ODetails.getTotalAmount(req.params.id)
+
+		return res.status(200).json({ 
+			message: 'Order retrieved succesfully', 
+			data: { order, orderDetails }
+		})
 	} catch (error) {
 		return res.status(500).send({ 
 			message: 'Order could not be retrieved', 

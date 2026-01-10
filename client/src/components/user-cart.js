@@ -146,8 +146,9 @@ customElements.define('user-cart',
 		async #checkout() {
 			try {
 				const result = await order()
+				const ono = result.data.order
 				this.dispatchEvent(new CustomEvent('order-placed', {
-					detail: result, bubbles: true, composed: true
+					detail: ono, bubbles: true, composed: true
 				}))
 			} catch (error) {
 				alert(JSON.stringify(error.details.errors))

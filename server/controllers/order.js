@@ -16,6 +16,7 @@ export async function order(req, res, next) {
 		}
 		const order = await Order.create(user)
 		const orderDetails = await ODetails.create({ order: order.insertId, details })
+		await Cart.delete(user)
 
 		return res.status(201).json({ 
 			message: 'Order placed succesfully', 

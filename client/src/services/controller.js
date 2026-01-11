@@ -8,11 +8,23 @@ import '../components/login-form.js'
 import '../components/search-page.js'
 import '../components/user-cart.js'
 import '../components/order-invoice.js'
+import '../components/nav-bar.js'
 
 function show(component) {
 	const container = document.getElementById('container')
 	container.replaceChildren(component)
 }
+
+document.addEventListener('add-navbar', () => {
+	const navBar = document.createElement('nav-bar')
+	document.getElementById('container').before(navBar)
+})
+
+document.addEventListener('open-home', () => {
+	document.querySelector('nav-bar').remove()
+	const homePage = document.createElement('home-page')
+	show(homePage)
+})
 
 document.addEventListener('open-register', () => {
 	const registerForm = document.createElement('register-form')

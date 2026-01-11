@@ -97,6 +97,9 @@ customElements.define('login-form',
 
 			try {
 				await login(memberInfo)
+				this.dispatchEvent(new CustomEvent('add-navbar', {
+					bubbles: true, composed: true
+				}))
 				this.dispatchEvent(new CustomEvent('open-search', {
 					bubbles: true, composed: true
 				}))

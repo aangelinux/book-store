@@ -105,12 +105,18 @@ export async function getOrder(id) {
     throw error
   }
 	
-	console.log(result)
 	return result
 }
 
 export async function logout() {
-	return fetch('/auth/logout', {
-		method: 'POST'
-	})
+  const res = await fetch('/auth/logout', { method: 'POST' })
+
+  const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message || 'Could not logout user')
+    error.details = result
+    throw error
+  }
+	
+	return result	
 }

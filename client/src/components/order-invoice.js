@@ -117,14 +117,12 @@ customElements.define('order-invoice',
 		}
 
 		#renderOrder(order) {
-			console.log(order)
 			this.#ono.textContent = `Invoice for order: ${order.ono}`
 			this.#name.textContent = `Name: ${order.fname} ${order.lname}`
 			this.#address.textContent = `Address: ${order.shipAddress}, ${order.shipCity} ${order.shipZip}`
 		}
 
 		#renderBooks(orderDetails) {
-			console.log(this.#table)
 			orderDetails.forEach((item) => {
 				const data = Object.values(item)
 				const row = document.createElement('tr')

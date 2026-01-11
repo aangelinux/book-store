@@ -27,16 +27,9 @@ export default class Cart {
 		return result
 	}
 
-	static async getMemberID() {
-		const query = 'SELECT userid FROM Cart'
-		const [result] = await db.query(query)
-
-		return result
-	}
-
-	static async delete() {
-		const query = 'DELETE FROM Cart'
-		const [result] = await db.query(query)
+	static async delete(userId) {
+		const query = 'DELETE FROM Cart WHERE userid = ?'
+		const [result] = await db.query(query, userId)
 
 		return result
 	}

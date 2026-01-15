@@ -28,7 +28,7 @@ template.innerHTML = `
 			width: 75%;
 			padding: 10px;
 			border-collapse: collapse;
-			font-family: 'Monaco', monospace;
+			font-family: "Segoe UI", sans-serif;
 		}
 
 		th {
@@ -45,7 +45,7 @@ template.innerHTML = `
 		}
 
 		h1, h2, p {
-			font-family: 'Monaco', monospace;			
+			font-family: "Segoe UI", sans-serif;
 		}
 	</style>
 

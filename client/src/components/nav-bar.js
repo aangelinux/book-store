@@ -18,16 +18,25 @@ template.innerHTML = `
 		}
 
 		button {
-			font-weight: bold;
-			font-family: 'Monaco', monospace;
+			width: 130px;
+			height: 35px;
+			padding: 8px;
+			margin: 5px;
+			display: flex;
+			align-self: center;
+			align-items: center;
+			justify-content: center;
+			font-family: "Segoe UI", sans-serif;
 			font-size: 1rem;
-			width: 150px;
-			height: 30px;
+			background-color: #0095ff;
+			color: #fff;
+			border: 1px solid transparent;
 			border-radius: 5px;
-			margin: 10px 20px 0 20px;
+			box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
 		}
 
-		button:hover {
+		button:hover, button:focus {
+			background-color: #07c;
 			cursor: pointer;
 		}
 	</style>

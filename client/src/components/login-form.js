@@ -16,37 +16,44 @@ template.innerHTML = `
 
 		h2 {
 			font-weight: bold;
-			font-family: 'Monaco', monospace;
+			font-family: "Segoe UI", sans-serif;
 			font-size: 2rem;
 		}
 
 		label {
 			margin: 10px;
-			font-family: 'Monaco', monospace;
+			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;			
 		}
 
 		input {
 			margin: 10px;
 			font-weight: bold;
-			font-family: 'Monaco', monospace;
+			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;
 			width: 400px;
 			height: 30px;			
 		}
 
 		button {
-			margin-top: 20px;
-			font-weight: bold;
-			font-family: 'Monaco', monospace;
-			font-size: 1.2rem;
 			width: 300px;
-			height: 40px;
-			margin-bottom: 10px;
-			border-radius: 5px;
+			height: 45px;
+			padding: 8px;
+			margin: 5px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: "Segoe UI", sans-serif;
+			font-size: 1.2rem;
+			background-color: #0095ff;
+			color: #fff;
+			border: 1px solid transparent;
+			border-radius: 7px;
+			box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
 		}
 
-		button:hover {
+		button:hover, button:focus {
+			background-color: #07c;
 			cursor: pointer;
 		}
 	</style>

@@ -22,11 +22,4 @@ export default class Book {
 
 		return { books: rows, pages: nrOfPages }
 	}
-
-	static async findByISBN(isbn) {
-		const query = 'SELECT * FROM Books WHERE isbn = ?'
-		const [result] = await db.query(query, isbn)
-
-		return result
-	}
 }

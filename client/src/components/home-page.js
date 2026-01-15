@@ -14,7 +14,7 @@ template.innerHTML = `
 
 		h1 {
 			font-weight: bold;
-			font-family: 'Monaco', monospace;
+			font-family: "Segoe UI", sans-serif;
 			font-size: 2rem;			
 		}
 
@@ -25,16 +25,21 @@ template.innerHTML = `
 		}
 
 		button {
-			font-weight: bold;
-			font-family: 'Monaco', monospace;
-			font-size: 1.2rem;
 			width: 300px;
 			height: 50px;
-			margin-bottom: 10px;
-			border-radius: 5px;
+			padding: 8px;
+			margin: 5px;
+			font-family: "Segoe UI", sans-serif;
+			font-size: 1.2rem;
+			background-color: #0095ff;
+			color: #fff;
+			border: 1px solid transparent;
+			border-radius: 7px;
+			box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
 		}
 
-		button:hover {
+		button:hover, button:focus {
+			background-color: #07c;
 			cursor: pointer;
 		}
 	</style>

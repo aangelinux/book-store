@@ -51,9 +51,7 @@ export async function login(req, res, next) {
 			return res.status(401).json({ message: 'Invalid email or password' })
 		}
 		req.session.userId = member.userid
-		res.status(201).send({
-			message: 'User logged in',
-		})
+		res.status(201).send({ message: 'User logged in' })
 	} catch (error) {
 		next(error)
 	}
@@ -69,7 +67,7 @@ export async function logout(req, res, next) {
 	}
 
 	req.session.destroy(() => {
-		res.status(201).send({
+		return res.status(201).send({
 			message: 'User logged out',
 		})
 	})

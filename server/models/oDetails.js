@@ -5,18 +5,18 @@
 import db from '../config/db.js'
 
 export default class ODetails {
-	static async create({ order, details }) {
+	static async insert({ ono, items }) {
 		let result = []
-		for (const book of details) {
+		for (const item of items) {
 			const priceQuery = 'SELECT price FROM Books WHERE isbn = ?'
-			const [priceRows] = await db.query(priceQuery, [book.isbn])
-			const amount = priceRows[0].price * book.qty
+			const [priceRows] = await db.query(priceQuery, [item.isbn])
+			const amount = priceRows[0].price * item.qty
 			
 			const query = 'INSERT INTO ODetails (ono, isbn, qty, amount) VALUES (?, ?, ?, ?)'
 			const [orderDetails] = await db.query(query, [
-				order,
-				book.isbn,
-				book.qty,
+				ono,
+				item.isbn,
+				item.qty,
 				amount
 			])
 			result.push(orderDetails)

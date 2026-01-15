@@ -21,6 +21,7 @@ template.innerHTML = `
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
+			width: 70%;
 		}
 
 		table {
@@ -103,23 +104,24 @@ customElements.define('order-invoice',
 			try {
 				const ono = this.getAttribute('ono')
 				const order = await getOrder(ono)
-				this.#render(order.data)
+				this.#render(order)
 			} catch (error) {
 				alert(error.message)
 				console.log(error)
 			}
 		}
 
-		#render(orderData) {
-			this.#renderOrder(orderData.order)
-			this.#renderBooks(orderData.orderDetails)
-			this.#renderTotal(orderData.total)
+		#render({ order, orderDetails, total }) {
+			this.#renderOrder(order)
+			this.#renderBooks(orderDetails)
+			this.#renderTotal(total)
 		}
 
 		#renderOrder(order) {
 			this.#ono.textContent = `Invoice for order: ${order.ono}`
 			this.#name.textContent = `Name: ${order.fname} ${order.lname}`
-			this.#address.textContent = `Address: ${order.shipAddress}, ${order.shipCity} ${order.shipZip}`
+			this.#address.textContent = 
+			`Address: ${order.shipAddress}, ${order.shipCity} ${order.shipZip}`
 		}
 
 		#renderBooks(orderDetails) {

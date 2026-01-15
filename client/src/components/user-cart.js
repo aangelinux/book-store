@@ -82,8 +82,6 @@ customElements.define('user-cart',
 		#table
 		#total
 		#checkoutBtn
-		#items = []
-		#prices = []
 
 		constructor() {
 			super()
@@ -98,7 +96,6 @@ customElements.define('user-cart',
 		}
 
 		connectedCallback() {
-			this.#render()
 			this.#fetchItems()
 
 			this.#checkoutBtn.addEventListener('click', () => this.#checkout())
@@ -110,9 +107,9 @@ customElements.define('user-cart',
 
 		async #fetchItems() {
 			try {
-				this.#items = await getCart()
-				if (this.#items.length > 0) {
-					this.#render()
+				const { items, total } = await getCart()
+				if (items.length > 0) {
+					this.#render({ items, total })
 				}
 			} catch (error) {
 				alert(error.message)
@@ -120,9 +117,8 @@ customElements.define('user-cart',
 			}
 		}
 
-		#render() {
-			this.#items.forEach((item) => {
-				this.#prices.push(item.price)
+		#render({ items, total }) {
+			items.forEach((item) => {
 				const data = Object.values(item)
 				const row = document.createElement('tr')
 
@@ -133,20 +129,12 @@ customElements.define('user-cart',
 				}
 				this.#table.appendChild(row)
 			})
-			this.#calculateTotal()
-		}
-
-		#calculateTotal() {
-			this.#prices.forEach((price) => Number(price))
-			const price = this.#prices.reduce((a, b) => a + b, 0)
-
-			this.#total.textContent = `Total: ${price}`
+			this.#total.textContent = `Total: ${total}`
 		}
 
 		async #checkout() {
 			try {
-				const result = await order()
-				const ono = result.data.order
+				const { ono } = await order()
 				this.dispatchEvent(new CustomEvent('order-placed', {
 					detail: ono, bubbles: true, composed: true
 				}))

@@ -1,9 +1,9 @@
 /**
- * Routes to the API's endpoints.
+ * The API's endpoints.
  */
 
 import express from 'express'
-import { validate } from '../middleware/validation.js'
+import { validate } from '../middleware/regValidation.js'
 import { login, logout, register } from '../controllers/auth.js'
 import { getBooks } from '../controllers/book.js'
 import { getCart, addToCart } from '../controllers/cart.js'

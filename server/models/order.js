@@ -5,7 +5,7 @@
 import db from '../config/db.js'
 
 export default class Order {
-	static async create(userId) {
+	static async insert(userId) {
 		const memberQuery = 'SELECT address, city, zip FROM Members WHERE userid = ?'
 		const [member] = await db.query(memberQuery, userId)
 

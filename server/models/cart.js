@@ -37,7 +37,7 @@ export default class Cart {
 			WHERE c.userid = ?`
 		const [result] = await db.query(query, userId)
 
-		return result
+		return result[0]
 	}
 
 	static async delete(userId) {

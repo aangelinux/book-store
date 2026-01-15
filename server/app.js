@@ -31,24 +31,18 @@ app.use(session({
 app.use('/', router)
 
 app.use((err, req, res, next) => {
-  console.error(err);
+  console.error(err)
   res.status(500).json({ message: "Oops! Something went wrong." })
 })
 
-async function start() {
+try {
 	await db.getConnection()
-		.then(() => console.log('Database connected succesfully!'))
-		.catch((error) => {
-			console.error('Database failed to connect: ', error)
-			process.exit(1)
-		})
-
-	app.listen(process.env.PORT, () => {
-    console.log(`Server running on PORT ${process.env.PORT}`)	
-	})
+	console.log('Database connected succesfully!')
+} catch (error) {
+	console.error('Database failed to connect: ', error)
+	process.exit(1)
 }
 
-start().catch(error => {
-	console.error('Error starting app: ', error)
-	process.exit(1)
+app.listen(process.env.PORT, () => {
+	console.log(`Server running on PORT ${process.env.PORT}`)	
 })

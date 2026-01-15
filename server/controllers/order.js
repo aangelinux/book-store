@@ -10,17 +10,19 @@ export async function order(req, res, next) {
 	const user = req.session.userId
 
 	try {
-		const details = await Cart.getItems(user)
-		if (details.length === 0) {
+		const items = await Cart.getItems(user)
+		if (items.length === 0) {
 			return res.status(404).json({ message: 'Cannot check out empty cart' })
 		}
-		const order = await Order.create(user)
-		const orderDetails = await ODetails.create({ order: order.insertId, details })
+		const order = await Order.insert(user)
+		const ono = order.insertId
+		const orderDetails = await ODetails.insert({ ono, items })
 		await Cart.delete(user)
 
 		return res.status(201).json({ 
 			message: 'Order placed succesfully', 
-			data: { order: order.insertId, orderDetails }
+			orderDetails,
+			ono
 		})
 	} catch (error) {
 		next(error)
@@ -35,7 +37,9 @@ export async function getOrder(req, res, next) {
 
 		return res.status(200).json({ 
 			message: 'Order retrieved succesfully', 
-			data: { order, orderDetails, total }
+			order,
+			orderDetails,
+			total
 		})
 	} catch (error) {
 		next(error)

@@ -9,11 +9,12 @@ export async function getCart(req, res, next) {
 
 	try {
 		const items = await Cart.getItems(userId)
-		const total = await Cart.getTotalPrice(userId)
-		if (items.length === 0) {
-			return res.status(200).json({ message: 'Cart is empty' })
-		}
-		return res.status(200).send(items)
+		const { total } = await Cart.getTotalPrice(userId)
+		return res.status(200).send({
+			message: 'Cart retrieved',
+			items,
+			total
+		})
 	} catch (error) {
 		next(error)
 	}
@@ -24,7 +25,7 @@ export async function addToCart(req, res, next) {
 
 	try {
 		await Cart.insert(req.body, userId)
-		res.status(201).json({ message: 'Book added to cart' })
+		return res.status(201).json({ message: 'Book added to cart' })
 	} catch (error) {
 		next(error)
 	}

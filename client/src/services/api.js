@@ -54,7 +54,7 @@ export async function getCart() {
     const error = new Error(result.message, result)
     throw error
   }
-	
+
 	return result
 }
 

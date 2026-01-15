@@ -1,5 +1,5 @@
 /**
- * Represents a Cart entity in the database.
+ * Represents a Cart entity.
  */
 
 import db from '../config/db.js'

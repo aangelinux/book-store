@@ -1,5 +1,5 @@
 /**
- * Represents a Book entity in the database.
+ * Represents a Book entity.
  */
 
 import db from '../config/db.js'

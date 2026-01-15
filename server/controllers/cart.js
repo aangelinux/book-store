@@ -10,11 +10,7 @@ export async function getCart(req, res, next) {
 	try {
 		const items = await Cart.getItems(userId)
 		const { total } = await Cart.getTotalPrice(userId)
-		return res.status(200).send({
-			message: 'Cart retrieved',
-			items,
-			total
-		})
+		return res.status(200).send({ items, total })
 	} catch (error) {
 		next(error)
 	}

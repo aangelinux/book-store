@@ -1,5 +1,5 @@
 /**
- * Represents an ODetails entity in the database.
+ * Represents an ODetails entity.
  */
 
 import db from '../config/db.js'

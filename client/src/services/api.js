@@ -9,13 +9,13 @@ export async function register(memberInfo) {
 		body: JSON.stringify(memberInfo)
 	})
 
-	const result = await res.json()
   if (!res.ok) {
+		const result = await res.json()
     const error = new Error(result.message, result)
     throw error
   }
 
-	return result
+	return res
 }
 
 export async function login(memberInfo) {
@@ -25,13 +25,13 @@ export async function login(memberInfo) {
 		body: JSON.stringify(memberInfo)
 	})
 
-	const result = await res.json()
   if (!res.ok) {
+		const result = await res.json()
     const error = new Error(result.message, result)
     throw error
   }
 
-	return result
+	return res
 }
 
 export async function retrieveBooks(input, page = 1) {
@@ -104,11 +104,11 @@ export async function getOrder(id) {
 export async function logout() {
   const res = await fetch('/auth/logout', { method: 'POST' })
 
-  const result = await res.json()
   if (!res.ok) {
+		const result = await res.json()
     const error = new Error(result.message, result)
     throw error
   }
-	
-	return result	
+
+	return res
 }

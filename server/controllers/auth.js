@@ -27,7 +27,7 @@ export async function register(req, res, next) {
 		const hashedPassword = await bcrypt.hash(req.body.password, 12)
 		const result = await Member.insert(req.body, hashedPassword)
 		req.session.userId = result.insertId
-		res.status(201).json({ message: 'Member registered successfully' })
+		res.status(201).end()
 	} catch (error) {
 		if (error.code === 'ER_DUP_ENTRY') {
 			return res.status(400).json({
@@ -51,7 +51,7 @@ export async function login(req, res, next) {
 			return res.status(401).json({ message: 'Invalid email or password' })
 		}
 		req.session.userId = member.userid
-		res.status(201).send({ message: 'User logged in' })
+		res.status(200).end()
 	} catch (error) {
 		next(error)
 	}
@@ -67,8 +67,6 @@ export async function logout(req, res, next) {
 	}
 
 	req.session.destroy(() => {
-		return res.status(201).send({
-			message: 'User logged out',
-		})
+		res.status(200).end()
 	})
 }

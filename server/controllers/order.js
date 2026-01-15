@@ -18,12 +18,8 @@ export async function order(req, res, next) {
 		const ono = order.insertId
 		const orderDetails = await ODetails.insert({ ono, items })
 		await Cart.delete(user)
-
-		return res.status(201).json({ 
-			message: 'Order placed succesfully', 
-			orderDetails,
-			ono
-		})
+		
+		res.status(201).json({ orderDetails, ono })
 	} catch (error) {
 		next(error)
 	}
@@ -35,8 +31,7 @@ export async function getOrder(req, res, next) {
 		const orderDetails = await ODetails.getItems(req.params.id)
 		const total = await ODetails.getTotalAmount(req.params.id)
 
-		return res.status(200).json({ 
-			message: 'Order retrieved succesfully', 
+		res.status(200).json({ 
 			order,
 			orderDetails,
 			total

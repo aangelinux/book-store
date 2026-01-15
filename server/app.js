@@ -9,7 +9,6 @@ import session from 'express-session'
 import router from './routes/router.js'
 import db from './config/db.js'
 import { fileURLToPath } from 'url'
-import { errorHandler } from './middleware/errorHandler.js'
 
 dotenv.config()
 
@@ -20,13 +19,19 @@ const __dirname = path.dirname(__filename)
 app.use(express.static(path.join(__dirname, '../client/public')))
 app.use('/src', express.static(path.join(__dirname, '..', 'client', 'src')))
 app.use(express.json())
+
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }))
+
 app.use('/', router)
-app.use(errorHandler)
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: "Oops! Something went wrong." })
+})
 
 async function start() {
 	await db.getConnection()

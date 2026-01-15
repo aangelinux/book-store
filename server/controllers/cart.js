@@ -1,5 +1,5 @@
 /**
- * Handles the user cart.
+ * Handles user's shopping cart.
  */
 
 import Cart from '../models/cart.js'
@@ -10,14 +10,11 @@ export async function getCart(req, res, next) {
 	try {
 		const items = await Cart.getCart(userId)
 		if (items.length === 0) {
-			return res.json({ message: 'Cart is empty' })
+			return res.status(200).json({ message: 'Cart is empty' })
 		}
 		return res.status(200).send(items)
 	} catch (error) {
-		return res.status(404).send({ 
-			message: 'Cart could not be retrieved', 
-			errors: error 
-		})
+		next(error)
 	}
 }
 
@@ -26,11 +23,8 @@ export async function addToCart(req, res, next) {
 
 	try {
 		await Cart.insert(req.body, userId)
-		res.status(201).json({
-			message: 'Book added to cart'
-		})
+		res.status(201).json({ message: 'Book added to cart' })
 	} catch (error) {
-		console.error('Error adding book to cart: ', error.message)
-		res.status(500).json({ error: 'Failed to add book to cart' })
+		next(error)
 	}
 }

@@ -1,10 +1,10 @@
 /**
- * Validates user input and handles errors.
+ * Validates user input for the registration form.
  */
 
 import { body } from 'express-validator'
 
-export const registerValidator = [
+export const validate = [
 	body('fname')
     .trim()
     .notEmpty().withMessage('First name is required')
@@ -48,14 +48,3 @@ export const registerValidator = [
     .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
     .isLength({ max: 200 }).withMessage('Password cannot be longer than 200 chars'),
 ]
-
-export function errorHandler(err, req, res, next) {
-	console.error(err)
-
-	const status = err && err.status ? err.status : 500
-	const message = err && err.message ? err.message : 'Internal Server Error'
-
-	if (res.headersSent) return next(err)
-
-	res.status(status).json({ message })
-}

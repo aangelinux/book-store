@@ -1,5 +1,5 @@
 /**
- * Handles order creation.
+ * Places and retrieves orders from the database.
  */
 
 import Cart from '../models/cart.js'
@@ -23,10 +23,7 @@ export async function order(req, res, next) {
 			data: { order: order.insertId, orderDetails }
 		})
 	} catch (error) {
-		return res.status(500).send({ 
-			message: 'Order could not be created', 
-			errors: error 
-		})
+		next(error)
 	}
 }
 
@@ -41,9 +38,6 @@ export async function getOrder(req, res, next) {
 			data: { order, orderDetails, total }
 		})
 	} catch (error) {
-		return res.status(500).send({ 
-			message: 'Order could not be retrieved', 
-			errors: error 
-		})
+		next(error)
 	}
 }

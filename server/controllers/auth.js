@@ -26,53 +26,51 @@ export async function register(req, res, next) {
   try {
 		const hashedPassword = await bcrypt.hash(req.body.password, 12)
 		const result = await Member.insert(req.body, hashedPassword)
+		req.session.userId = result.insertId
 		res.status(201).json({
-			message: 'Member registered successfully!',
+			message: 'Member registered successfully',
 			memberId: result.insertId
 		})
 	} catch (error) {
 		if (error.code === 'ER_DUP_ENTRY') {
 			return res.status(400).json({
-				errors: 'A member with this email already exists. Please use a different email.',
+				errors: 'A member with this email already exists. Please use a different email',
 			})
 		}
-		console.error('Error registering member: ', error.message)
-		res.status(500).json({ error: 'Failed to register member' })
+		next(error)
 	}
 }
 
 export async function login(req, res, next) {
 	const { email, password } = req.body
 
-	const member = await Member.findByEmail(email)
-	if (!member) {
-		return res.status(401).json({ errors: 'Invalid email or password.' })
+	try {
+		const member = await Member.findByEmail(email)
+		const match = await bcrypt.compare(password, member.password)
+		if (!member || !match) {
+			return res.status(401).json({ errors: 'Invalid email or password' })
+		}
+		req.session.userId = member.userid
+		res.status(201).send({
+			message: 'User logged in',
+		})
+	} catch (error) {
+		next(error)
 	}
-
-	const match = await bcrypt.compare(password, member.password)
-	if (!match) {
-		return res.status(401).json({ errors: 'Invalid email or password.' })
-	}
-
-	req.session.userId = member.userid
-	res.status(201).send({
-		message: 'User logged in successfully!',
-	})
 }
 
 export async function logout(req, res, next) {
-	if (!req.session) return res.status(404).json({ errors: 'User not logged in.' })
-
+	if (!req.session) return res.status(404).json({ errors: 'User not logged in' })
+		
 	try {
 		await Cart.delete(req.session.userId)
 	} catch (error) {
-		console.error('Error deleting cart: ', error.message)
-		res.status(500).json({ errors: 'Failed to delete cart' })
+		next(error)
 	}
 
 	req.session.destroy(() => {
 		res.status(201).send({
-			message: 'User logged out successfully!',
+			message: 'User logged out',
 		})
 	})
 }

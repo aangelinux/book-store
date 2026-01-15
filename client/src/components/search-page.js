@@ -153,7 +153,7 @@ customElements.define('search-page',
 				}
 			})
 			this.#nextBtn.addEventListener('click', (e) => {
-				this.#currentPage++
+				this.#currentPage++  //TODO: need to add an if-check for final page
 				e.preventDefault()
 				this.#searchBy(this.#currentSearch)				
 			})
@@ -181,8 +181,8 @@ customElements.define('search-page',
 						this.#updatePageInfo(res.pages)
 					}
 				} catch (error) {
-					alert(JSON.stringify(error.details.errors))
-					console.log(error.details.errors)
+					alert(error.message)
+					console.log(error)
 				}
 			}
 		}
@@ -217,8 +217,8 @@ customElements.define('search-page',
 			try {
 				await addToCart({ isbn: details.book.isbn, quantity: details.quantity })
 			} catch (error) {
-				alert(JSON.stringify(error.details.errors))
-				console.log(error.details.errors)
+				alert(error.message)
+				console.log(error)
 			}
 		}
 

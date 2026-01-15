@@ -90,13 +90,8 @@ customElements.define('login-form',
 		}
 
 		async #login() {
-			const memberInfo = {
-				email: this.#email.value,
-				password: this.#password.value
-			}
-
 			try {
-				await login(memberInfo)
+				await login({ email: this.#email.value, password: this.#password.value})
 				this.dispatchEvent(new CustomEvent('add-navbar', {
 					bubbles: true, composed: true
 				}))
@@ -104,8 +99,8 @@ customElements.define('login-form',
 					bubbles: true, composed: true
 				}))
 			} catch (error) {
-				alert(error.details.errors)
-				console.log(error.details.errors)
+				alert(error.message)
+				console.log(error)
 			}
 		}
 	}

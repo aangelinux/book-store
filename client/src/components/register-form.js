@@ -98,7 +98,7 @@ customElements.define('register-form',
 
 		connectedCallback() {
 			this.#registerBtn.addEventListener('click', () => {
-				const memberInfo = this.#getInfo()
+				const memberInfo = this.#getFormInput()
 				this.#register(memberInfo)
 			})
 		}
@@ -107,7 +107,7 @@ customElements.define('register-form',
 			this.abortController.abort()
 		}
 
-		#getInfo() {
+		#getFormInput() {
 			return {
 				fname: this.shadowRoot.getElementById('fname').value,
 				lname: this.shadowRoot.getElementById('lname').value,
@@ -130,8 +130,8 @@ customElements.define('register-form',
 					bubbles: true, composed: true
 				}))
 			} catch (error) {
-				alert(JSON.stringify(error.details.errors)) //TODO: make user-friendly
-				console.log(error.details.errors)
+				alert(error.message)
+				console.log(error)
 			}
 		}
 	}

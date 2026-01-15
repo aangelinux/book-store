@@ -11,8 +11,7 @@ export async function register(memberInfo) {
 
 	const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Registration failed')
-    error.details = result
+    const error = new Error(result.message, result)
     throw error
   }
 
@@ -28,8 +27,7 @@ export async function login(memberInfo) {
 
 	const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Login failed')
-    error.details = result
+    const error = new Error(result.message, result)
     throw error
   }
 
@@ -41,8 +39,7 @@ export async function retrieveBooks(input, page = 1) {
 
 	const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Could not retrieve books')
-    error.details = result
+    const error = new Error(result.message, result)
     throw error
   }
 	
@@ -54,8 +51,7 @@ export async function getCart() {
 
 	const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Could not retrieve cart')
-    error.details = result
+    const error = new Error(result.message, result)
     throw error
   }
 	
@@ -71,8 +67,7 @@ export async function addToCart(book) {
 
 	const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Could not add book to cart')
-    error.details = result
+    const error = new Error(result.message, result)
     throw error
   }
 	
@@ -87,8 +82,7 @@ export async function order() {
 
 	const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Could not place order')
-    error.details = result
+    const error = new Error(result.message, result)
     throw error
   }
 	
@@ -100,8 +94,7 @@ export async function getOrder(id) {
 
 	const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Could not retrieve order')
-    error.details = result
+    const error = new Error(result.message, result)
     throw error
   }
 	
@@ -113,8 +106,7 @@ export async function logout() {
 
   const result = await res.json()
   if (!res.ok) {
-    const error = new Error(result.message || 'Could not logout user')
-    error.details = result
+    const error = new Error(result.message, result)
     throw error
   }
 	

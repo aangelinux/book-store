@@ -8,6 +8,7 @@ import express from 'express'
 import session from 'express-session'
 import router from './routes/router.js'
 import db from './config/db.js'
+import { xss } from 'express-xss-sanitizer'
 import { fileURLToPath } from 'url'
 
 dotenv.config()
@@ -19,6 +20,7 @@ const __dirname = path.dirname(__filename)
 app.use(express.static(path.join(__dirname, '../client/public')))
 app.use('/src', express.static(path.join(__dirname, '..', 'client', 'src')))
 app.use(express.json())
+app.use(xss())
 
 app.use(session({
   secret: process.env.SESSION_SECRET,

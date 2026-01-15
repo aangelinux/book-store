@@ -12,7 +12,7 @@ export async function order(req, res, next) {
 	try {
 		const details = await Cart.getCart(user)
 		if (details.length === 0) {
-			return res.json({ message: 'Cart is empty' })
+			return res.status(404).json({ message: 'Cannot check out empty cart' })
 		}
 		const order = await Order.create(user)
 		const orderDetails = await ODetails.create({ order: order.insertId, details })

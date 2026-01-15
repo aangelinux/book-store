@@ -115,8 +115,8 @@ customElements.define('user-cart',
 					this.#render()
 				}
 			} catch (error) {
-				alert(JSON.stringify(error.details.errors))
-				console.log(error.details.errors)
+				alert(error.message)
+				console.log(error)
 			}
 		}
 
@@ -151,8 +151,8 @@ customElements.define('user-cart',
 					detail: ono, bubbles: true, composed: true
 				}))
 			} catch (error) {
-				alert(JSON.stringify(error.details.errors))
-				console.log(error.details.errors)
+				alert(error.message)
+				console.log(error)
 			}
 		}
 	}

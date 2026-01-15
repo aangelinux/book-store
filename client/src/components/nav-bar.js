@@ -70,8 +70,8 @@ customElements.define('nav-bar',
 					bubbles: true, composed: true
 				}))
 			} catch (error) {
-				alert(error.errors)
-				console.log(error.errors)
+				alert(error.message)
+				console.log(error)
 			}
 		}
 

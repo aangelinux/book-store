@@ -105,8 +105,8 @@ customElements.define('order-invoice',
 				const order = await getOrder(ono)
 				this.#render(order.data)
 			} catch (error) {
-				alert(JSON.stringify(error.details.errors))
-				console.log(error.details.errors)
+				alert(error.message)
+				console.log(error)
 			}
 		}
 

@@ -1,5 +1,5 @@
 /**
- * Handles all forms of member authorization and registration.
+ * Handles member authorization and registration.
  */
 
 import { validationResult } from 'express-validator'
@@ -13,7 +13,7 @@ function isValid(req, res) {
 	if (!errors.isEmpty()) {
 		res.status(400).json({
 			success: false,
-			errors: errors.array()
+			message: errors.array().map(e => `\n${e.msg}`)
 		})
 		return false
 	}
@@ -27,14 +27,11 @@ export async function register(req, res, next) {
 		const hashedPassword = await bcrypt.hash(req.body.password, 12)
 		const result = await Member.insert(req.body, hashedPassword)
 		req.session.userId = result.insertId
-		res.status(201).json({
-			message: 'Member registered successfully',
-			memberId: result.insertId
-		})
+		res.status(201).json({ message: 'Member registered successfully' })
 	} catch (error) {
 		if (error.code === 'ER_DUP_ENTRY') {
 			return res.status(400).json({
-				errors: 'A member with this email already exists. Please use a different email',
+				message: 'A member with this email already exists. Please use a different email',
 			})
 		}
 		next(error)
@@ -48,7 +45,7 @@ export async function login(req, res, next) {
 		const member = await Member.findByEmail(email)
 		const match = await bcrypt.compare(password, member.password)
 		if (!member || !match) {
-			return res.status(401).json({ errors: 'Invalid email or password' })
+			return res.status(401).json({ message: 'Invalid email or password' })
 		}
 		req.session.userId = member.userid
 		res.status(201).send({
@@ -60,7 +57,7 @@ export async function login(req, res, next) {
 }
 
 export async function logout(req, res, next) {
-	if (!req.session) return res.status(404).json({ errors: 'User not logged in' })
+	if (!req.session) return res.status(404).json({ message: 'User not logged in' })
 		
 	try {
 		await Cart.delete(req.session.userId)

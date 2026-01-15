@@ -10,9 +10,38 @@ template.innerHTML = `
 			margin-bottom: 15px;
 			padding: 10px;
 			width: 75%;
-			font-family: 'Monaco', monospace;
+			font-family: "Segoe UI", sans-serif;
 			border: 2px solid grey;
 			border-radius: 5px;
+		}
+
+		h3 {
+			margin: 10px 0 8px 0;
+		}
+
+		input {
+			width: 180px;
+			height: 21px;
+		}
+
+		button {
+			width: 100px;
+			height: 25px;
+			padding: 5px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			font-family: "Segoe UI", sans-serif;
+			font-size: .7rem;
+			background-color: #0095ff;
+			color: #fff;
+			border: 1px solid transparent;
+			border-radius: 4px;
+		}
+
+		button:hover, button:focus {
+			background-color: #07c;
+			cursor: pointer;
 		}
 	</style>
 

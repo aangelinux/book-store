@@ -20,16 +20,23 @@ template.innerHTML = `
 			font-weight: bold;
 			font-family: "Segoe UI", sans-serif;
 			font-size: 2rem;
+			margin: 15px 0 15px 0;
+		}
+
+		#cart {
+			width: 150px;
+			align-self: flex-start;
+			margin-left: 10px;
+			position: absolute;
 		}
 
 		label {
-			margin: 10px;
 			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;			
 		}
 
 		input {
-			margin: 10px;
+			margin: 3px 0 4px 0;
 			font-weight: bold;
 			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;
@@ -41,7 +48,6 @@ template.innerHTML = `
 			width: 200px;
 			height: 35px;
 			padding: 8px;
-			margin: 5px;
 			display: flex;
 			align-items: center;
 			justify-content: center;
@@ -93,7 +99,7 @@ template.innerHTML = `
 			<button id="titleBtn">Search by title</button>
 		</form>
 
-		<h2>Books</h2>
+		<h2>Our Books</h2>
 		<div id="paginationButtons">
 			<button id="prev">Previous page</button>
 			<button id="next">Next page</button>

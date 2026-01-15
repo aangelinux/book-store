@@ -30,7 +30,7 @@ template.innerHTML = `
 			font-weight: bold;
 			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;
-			width: 400px;
+			width: 700px;
 			height: 30px;			
 		}
 
@@ -43,7 +43,7 @@ template.innerHTML = `
 			align-items: center;
 			justify-content: center;
 			font-family: "Segoe UI", sans-serif;
-			font-size: 1rem;
+			font-size: 1.2rem;
 			background-color: #0095ff;
 			color: #fff;
 			border: 1px solid transparent;

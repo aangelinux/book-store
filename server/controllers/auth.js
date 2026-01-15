@@ -43,8 +43,11 @@ export async function login(req, res, next) {
 
 	try {
 		const member = await Member.findByEmail(email)
+		if (!member) {
+			return res.status(401).json({ message: 'Invalid email or password' })
+		}
 		const match = await bcrypt.compare(password, member.password)
-		if (!member || !match) {
+		if (!match) {
 			return res.status(401).json({ message: 'Invalid email or password' })
 		}
 		req.session.userId = member.userid

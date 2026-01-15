@@ -10,7 +10,7 @@ export async function order(req, res, next) {
 	const user = req.session.userId
 
 	try {
-		const details = await Cart.getCart(user)
+		const details = await Cart.getItems(user)
 		if (details.length === 0) {
 			return res.status(404).json({ message: 'Cannot check out empty cart' })
 		}

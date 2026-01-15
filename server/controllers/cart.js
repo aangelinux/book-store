@@ -8,7 +8,8 @@ export async function getCart(req, res, next) {
 	const userId = req.session.userId
 
 	try {
-		const items = await Cart.getCart(userId)
+		const items = await Cart.getItems(userId)
+		const total = await Cart.getTotalPrice(userId)
 		if (items.length === 0) {
 			return res.status(200).json({ message: 'Cart is empty' })
 		}

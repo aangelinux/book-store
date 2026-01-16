@@ -181,17 +181,14 @@ customElements.define('search-page',
 		async #searchBy({ type, value }) {
 			if (value) {
 				try {
-					const res = await getBooks({ value, type }, this.#currentPage)
-					if (res.books.length === 0) {
-						return alert(res.message)
-					}
+					const res = await getBooks({ type, value }, this.#currentPage)
 					if (this.#currentPage <= res.pages) {
 						this.#createListing(res.books)
 						this.#updatePageInfo(res.pages)
 					}
 				} catch (error) {
 					alert(error.message)
-					console.log(error)
+				  console.log(error)
 				}
 			}
 		}

@@ -8,7 +8,9 @@ export default class Member {
 	static async insert(data, passwordHash) {
 		const { fname, lname, address, city, zip, phone, email } = data
 		
-		const query = 'INSERT INTO Members (fname, lname, address, city, zip, phone, email, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+		const query = `
+		INSERT INTO Members (fname, lname, address, city, zip, phone, email, password) 
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
 		const [result] = await db.query(query, [
 			fname,
 			lname,

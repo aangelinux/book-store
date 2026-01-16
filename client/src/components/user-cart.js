@@ -141,10 +141,10 @@ customElements.define('user-cart',
 
 		async #checkout() {
 			try {
-				const { ono } = await order()
+				const ono = await order()
 				this.dispatchEvent(new CustomEvent('order-placed', {
 					detail: ono, bubbles: true, composed: true
-				}))
+				}))  // ono needed to pass to order-invoice component
 			} catch (error) {
 				alert(error.message)
 				console.log(error)

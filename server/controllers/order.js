@@ -16,10 +16,10 @@ export async function order(req, res, next) {
 		}
 		const order = await Order.insert(user)
 		const ono = order.insertId
-		const orderDetails = await ODetails.insert({ ono, items })
+		await ODetails.insert({ ono, items })
 		await Cart.delete(user)
 		
-		res.status(201).json({ orderDetails, ono })
+		res.status(201).json(ono)
 	} catch (error) {
 		next(error)
 	}

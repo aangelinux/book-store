@@ -7,8 +7,8 @@ import db from '../config/db.js'
 export default class Cart {
 	static async insert(data, user) {
 		const query = `
-		INSERT INTO Cart (userid, isbn, qty) VALUES (?, ?, ?)
-		ON DUPLICATE KEY UPDATE qty = qty + VALUES(qty)`
+			INSERT INTO Cart (userid, isbn, qty) VALUES (?, ?, ?)
+			ON DUPLICATE KEY UPDATE qty = qty + VALUES(qty)`
 		const [result] = await db.query(query, [
 			user,
 			data.isbn,

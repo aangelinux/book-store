@@ -6,32 +6,29 @@ import db from '../config/db.js'
 
 export default class ODetails {
 	static async insert({ ono, items }) {
-		let result = []
+		let results = []
+
 		for (const item of items) {
 			const priceQuery = 'SELECT price FROM Books WHERE isbn = ?'
-			const [priceRows] = await db.query(priceQuery, [item.isbn])
-			const amount = priceRows[0].price * item.qty
+			const [rows] = await db.query(priceQuery, item.isbn)
+			const amount = rows[0].price * item.qty
 			
 			const query = 'INSERT INTO ODetails (ono, isbn, qty, amount) VALUES (?, ?, ?, ?)'
-			const [orderDetails] = await db.query(query, [
+			const [current] = await db.query(query, [
 				ono,
 				item.isbn,
 				item.qty,
 				amount
 			])
-			result.push(orderDetails)
+			results.push(current)
 		}
 
-		return result
+		return results
 	}
 
 	static async getItems(order) {
 		const query = `
-			SELECT 
-				b.isbn,
-				b.title,
-				b.price,
-				od.qty
+			SELECT b.isbn, b.title, b.price, od.qty
 			FROM ODetails od
 			JOIN Books b ON od.isbn = b.isbn
 			WHERE od.ono = ?`

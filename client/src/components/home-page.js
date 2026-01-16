@@ -69,8 +69,10 @@ customElements.define('home-page',
 		}
 
 		connectedCallback() {
-			this.#loginBtn.addEventListener('click', this.#openLogin)
-			this.#registerBtn.addEventListener('click', this.#openRegister)
+			this.#loginBtn.addEventListener('click', this.#openLogin,
+				{ signal: this.abortController.signal })
+			this.#registerBtn.addEventListener('click', this.#openRegister,
+				{ signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {

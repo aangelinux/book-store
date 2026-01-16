@@ -89,7 +89,8 @@ customElements.define('login-form',
 		}
 
 		connectedCallback() {
-			this.#loginBtn.addEventListener('click', () => this.#login())
+			this.#loginBtn.addEventListener('click', () => this.#login(),
+				{ signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {

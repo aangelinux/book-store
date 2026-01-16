@@ -106,7 +106,7 @@ customElements.define('register-form',
 			this.#registerBtn.addEventListener('click', () => {
 				const memberInfo = this.#getFormInput()
 				this.#register(memberInfo)
-			})
+			}, { signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {

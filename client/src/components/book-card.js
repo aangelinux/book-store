@@ -81,7 +81,7 @@ customElements.define('book-card',
 					bubbles: true, composed: true
 				})
 				this.dispatchEvent(addToCart)
-			})
+			}, { signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {

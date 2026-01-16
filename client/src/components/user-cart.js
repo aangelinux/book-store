@@ -104,8 +104,8 @@ customElements.define('user-cart',
 
 		connectedCallback() {
 			this.#fetchItems()
-
-			this.#checkoutBtn.addEventListener('click', () => this.#checkout())
+			this.#checkoutBtn.addEventListener('click', () => this.#checkout(),
+				{ signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {

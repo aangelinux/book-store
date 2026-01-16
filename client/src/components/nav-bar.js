@@ -64,8 +64,10 @@ customElements.define('nav-bar',
 		}
 
 		connectedCallback() {
-			this.#logoutBtn.addEventListener('click', () => this.#logout())
-			this.#searchBtn.addEventListener('click', () => this.#openSearch())
+			this.#logoutBtn.addEventListener('click', () => this.#logout(),
+				{ signal: this.abortController.signal })
+			this.#searchBtn.addEventListener('click', () => this.#openSearch(),
+				{ signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {

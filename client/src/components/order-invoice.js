@@ -139,7 +139,7 @@ customElements.define('order-invoice',
 		}
 
 		#renderTotal(total) {
-			this.#total.textContent = `Order Total: ${total.total}`
+			this.#total.textContent = `Order Total: $${total.total}`
 		}
 	}
 )

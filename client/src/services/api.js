@@ -34,8 +34,8 @@ export async function login(memberInfo) {
 	return res
 }
 
-export async function retrieveBooks(input, page = 1) {
-	const res = await fetch(`/books?type=${input.type}&value=${input.value}&page=${page}`)
+export async function getBooks(input, page = 1) {
+	const res = await fetch(`/books/${input.type}?value=${input.value}&page=${page}`)
 
 	const result = await res.json()
   if (!res.ok) {

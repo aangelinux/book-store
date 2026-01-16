@@ -2,8 +2,7 @@
  * Web component representing a search bar.
  */
 
-import { retrieveBooks } from '../services/api.js'
-import { addToCart } from '../services/api.js'
+import { getBooks, addToCart } from '../services/api.js'
 import './book-card.js'
 
 const template = document.createElement('template')
@@ -73,11 +72,8 @@ template.innerHTML = `
 		#pageInfo {
 			align-self: center;
 			font-weight: bold;
-			font-family: 'Monaco', monospace;
+			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;
-		}
-
-		#cart {
 		}
 	</style>
 
@@ -185,7 +181,7 @@ customElements.define('search-page',
 		async #searchBy({ type, value }) {
 			if (value) {
 				try {
-					const res = await retrieveBooks({ value, type }, this.#currentPage)
+					const res = await getBooks({ value, type }, this.#currentPage)
 					if (res.books.length === 0) {
 						return alert(res.message)
 					}

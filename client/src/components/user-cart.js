@@ -136,15 +136,15 @@ customElements.define('user-cart',
 				}
 				this.#table.appendChild(row)
 			})
-			this.#total.textContent = `Total: ${total}`
+			this.#total.textContent = `Total: $${total}`
 		}
 
 		async #checkout() {
 			try {
-				const ono = await order()
+				const ono = await order()  // need to pass ono to order-invoice
 				this.dispatchEvent(new CustomEvent('order-placed', {
 					detail: ono, bubbles: true, composed: true
-				}))  // ono needed to pass to order-invoice component
+				}))
 			} catch (error) {
 				alert(error.message)
 				console.log(error)

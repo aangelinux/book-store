@@ -22,6 +22,8 @@ template.innerHTML = `
 		input {
 			width: 180px;
 			height: 21px;
+			border: 1.5px solid grey;
+			border-radius: 5px;
 		}
 
 		button {

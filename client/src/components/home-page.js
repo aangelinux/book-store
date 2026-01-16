@@ -34,7 +34,7 @@ template.innerHTML = `
 			background-color: #0095ff;
 			color: #fff;
 			border: 1px solid transparent;
-			border-radius: 7px;
+			border-radius: 10px;
 			box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
 		}
 

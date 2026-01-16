@@ -29,6 +29,10 @@ template.innerHTML = `
 			position: absolute;
 		}
 
+		form {
+			margin-bottom: 15px;
+		}
+
 		label {
 			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;			
@@ -40,7 +44,9 @@ template.innerHTML = `
 			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;
 			width: 400px;
-			height: 30px;			
+			height: 30px;
+			border: 1.5px solid grey;
+			border-radius: 5px;
 		}
 
 		button {

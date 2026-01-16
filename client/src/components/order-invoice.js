@@ -24,6 +24,11 @@ template.innerHTML = `
 			width: 70%;
 		}
 
+		input {
+			border: 1.5px solid grey;
+			border-radius: 5px;
+		}
+
 		table {
 			width: 75%;
 			padding: 10px;

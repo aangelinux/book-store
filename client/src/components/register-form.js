@@ -31,7 +31,9 @@ template.innerHTML = `
 			font-family: "Segoe UI", sans-serif;
 			font-size: 1.2rem;
 			width: 700px;
-			height: 30px;			
+			height: 30px;
+			border: 1.5px solid grey;
+			border-radius: 5px;
 		}
 
 		button {
@@ -49,6 +51,7 @@ template.innerHTML = `
 			color: #fff;
 			border: 1px solid transparent;
 			border-radius: 15px;
+			margin-bottom: 25px;
 		}
 
 		button:hover, button:focus {

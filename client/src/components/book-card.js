@@ -32,8 +32,8 @@ template.innerHTML = `
 			align-items: center;
 			justify-content: center;
 			font-family: "Segoe UI", sans-serif;
-			font-size: .7rem;
-			background-color: #0095ff;
+			font-size: .8rem;
+			background-color: #1180db;
 			color: #fff;
 			border: 1px solid transparent;
 			border-radius: 4px;
@@ -59,7 +59,7 @@ template.innerHTML = `
 
 customElements.define('book-card', 
 	class BookCard extends HTMLElement {
-		#info
+		#info  // needed to pass to user-cart component
 		#cartBtn
 		#quantityField
 
@@ -90,7 +90,6 @@ customElements.define('book-card',
 
 		set book(info) {
 			this.#info = info
-
 			this.shadowRoot.querySelector('#title').textContent = info.title
 			this.shadowRoot.querySelector('#author').textContent = `Author: ${info.author}`
 			this.shadowRoot.querySelector('#isbn').textContent = `ISBN: ${info.isbn}`

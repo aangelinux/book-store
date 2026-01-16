@@ -10,17 +10,19 @@ template.innerHTML = `
 		div {
 			width: 100vw;
 			height: 10vh;
-			background-color: lightgray;
+			background-color: white;
 			top: 0;
 			display: flex;
 			flex-direction: row;
+			gap: 15px;
 			margin-bottom: 15px;
+			box-shadow: 15px 5px 15px 5px rgba(0, 0, 0, 0.055);
 		}
 
 		button {
 			width: 130px;
 			height: 35px;
-			padding: 8px;
+			padding: 5px;
 			margin: 5px;
 			display: flex;
 			align-self: center;
@@ -28,20 +30,24 @@ template.innerHTML = `
 			justify-content: center;
 			font-family: "Segoe UI", sans-serif;
 			font-size: 1rem;
-			background-color: #0095ff;
+			background-color: #1180db;
 			color: #fff;
 			border: 1px solid transparent;
-			border-radius: 5px;
-			box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+			border-radius: 15px;
 		}
 
 		button:hover, button:focus {
 			background-color: #07c;
 			cursor: pointer;
 		}
+
+		img {
+			margin: 10px 15px 10px 25px;
+		}
 	</style>
 
 	<div>
+		<img src="/images/books.png" alt="books"/>
 		<button id="logoutBtn">Logout</button>
 		<button id="searchBtn">Search Page</button>
 	</div>

@@ -128,7 +128,7 @@ customElements.define('order-invoice',
 			orderDetails.forEach((item) => {
 				const data = Object.values(item)
 				const row = document.createElement('tr')
-
+				
 				for (const value of data) {
 					const cell = document.createElement('td')
 					cell.textContent = value

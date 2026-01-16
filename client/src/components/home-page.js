@@ -1,5 +1,5 @@
 /**
- * Web component representing a bookstore's home page.
+ * Web component representing bookstore's home page.
  */
 
 const template = document.createElement('template')

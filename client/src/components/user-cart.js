@@ -49,18 +49,18 @@ template.innerHTML = `
 		button {
 			width: 200px;
 			height: 35px;
-			padding: 8px;
+			padding: 5px;
 			margin: 5px;
 			display: flex;
+			align-self: center;
 			align-items: center;
 			justify-content: center;
 			font-family: "Segoe UI", sans-serif;
 			font-size: 1rem;
-			background-color: #0095ff;
+			background-color: #1180db;
 			color: #fff;
 			border: 1px solid transparent;
-			border-radius: 5px;
-			box-shadow: rgba(255, 255, 255, .4) 0 1px 0 0 inset;
+			border-radius: 15px;
 		}
 
 		button:hover, button:focus {

@@ -105,8 +105,9 @@ template.innerHTML = `
 
 customElements.define('search-page', 
 	class SearchPage extends HTMLElement {
-		#currentSearch = { type: '', value: '' }
+		#input = { type: '', value: '' }
 		#currentPage = 1
+		#pages
 		#cartBtn
 		#prevBtn
 		#nextBtn
@@ -136,60 +137,76 @@ customElements.define('search-page',
 		}
 
 		connectedCallback() {
-			this.#authorBtn.addEventListener('click', (e) => {
-				this.#currentPage = 1
-				this.#currentSearch = { type: 'author', value: this.#author.value }
-				e.preventDefault()
-				this.#searchBy(this.#currentSearch)
-			})
-			this.#titleBtn.addEventListener('click', (e) => {
-				this.#currentPage = 1
-				this.#currentSearch = { type: 'title', value: this.#title.value }
-				e.preventDefault()
-				this.#searchBy(this.#currentSearch)
-			})
+			this.addEventListener('add-to-cart', (e) => this.#addToCart(e.detail), 
+			{ signal: this.abortController.signal })
+
 			this.#subjectBtn.addEventListener('click', (e) => {
-				this.#currentPage = 1
-				this.#currentSearch = { type: 'subject', value: this.#subject.value }
 				e.preventDefault()
-				this.#searchBy(this.#currentSearch)
-			})
-			this.#prevBtn.addEventListener('click', (e) => {
-				if (this.#currentPage > 1) {
-					this.#currentPage--
-					e.preventDefault()
-					this.#searchBy(this.#currentSearch)
-				}
-			})
-			this.#nextBtn.addEventListener('click', (e) => {
-				this.#currentPage++  //TODO: need to add an if-check for final page
+				this.#getInput('subject', this.#subject.value)
+			}, { signal: this.abortController.signal })
+			this.#authorBtn.addEventListener('click', (e) => {
 				e.preventDefault()
-				this.#searchBy(this.#currentSearch)				
-			})
-			this.#cartBtn.addEventListener('click', (e) => {
-				this.#openCart()		
-			})
-			this.addEventListener('add-to-cart', (e) => {
-				this.#addToCart(e.detail)
-			})
+				this.#getInput('author', this.#author.value)
+			}, { signal: this.abortController.signal })
+			this.#titleBtn.addEventListener('click', (e) => {
+				e.preventDefault()
+				this.#getInput('title', this.#title.value)
+			}, { signal: this.abortController.signal })
+
+			this.#prevBtn.addEventListener('click', (e) => this.#getPrevPage(e),
+			{ signal: this.abortController.signal })
+			this.#nextBtn.addEventListener('click', (e) => this.#getNextPage(e),
+			{ signal: this.abortController.signal })			
+			this.#cartBtn.addEventListener('click', this.#openCart, 
+			{ signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {
 			this.abortController.abort()
 		}
 
-		async #searchBy({ type, value }) {
-			if (value) {
-				try {
-					const res = await getBooks({ type, value }, this.#currentPage)
-					if (this.#currentPage <= res.pages) {
-						this.#createListing(res.books)
-						this.#updatePageInfo(res.pages)
-					}
-				} catch (error) {
-					alert(error.message)
-				  console.log(error)
-				}
+		async #addToCart(details) {
+			try {
+				await addToCart({ isbn: details.book.isbn, quantity: details.quantity })
+			} catch (error) {
+				alert(error.message)
+				console.log(error)
+			}
+		}
+
+		async #getInput(type, value) {
+			this.#currentPage = 1
+			this.#input = { type, value }
+			if (this.#input.value) {
+				await this.#search()
+			}
+		}
+
+		async #getPrevPage(e) {
+			e.preventDefault()
+			if (this.#currentPage > 1) {
+				this.#currentPage--
+				await this.#search()
+			}
+		}
+
+		async #getNextPage(e) {
+			e.preventDefault()
+			if (this.#currentPage < this.#pages) {
+				this.#currentPage++
+				await this.#search()
+			}
+		}
+
+		async #search() {
+			try {
+				const { books, pages } = await getBooks(this.#input, this.#currentPage)
+				this.#pages = pages
+				this.#createListing(books)
+				this.#updatePageInfo(pages)
+			} catch (error) {
+				alert(error.message)
+				console.log(error)
 			}
 		}
 
@@ -215,17 +232,7 @@ customElements.define('search-page',
 			const pageInfo = document.createElement('p')
 			pageInfo.textContent = `Page ${this.#currentPage} of ${pages}`
 			pageInfo.id = 'pageInfo'
-			pageInfo.className = 'pageInfo'
 			this.shadowRoot.querySelector('#paginationButtons').after(pageInfo)
-		}
-
-		async #addToCart(details) {
-			try {
-				await addToCart({ isbn: details.book.isbn, quantity: details.quantity })
-			} catch (error) {
-				alert(error.message)
-				console.log(error)
-			}
 		}
 
 		#openCart() {

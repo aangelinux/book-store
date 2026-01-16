@@ -22,13 +22,6 @@ template.innerHTML = `
 			margin: 15px 0 15px 0;
 		}
 
-		#cart {
-			width: 150px;
-			align-self: flex-start;
-			margin-left: 10px;
-			position: absolute;
-		}
-
 		form {
 			margin-bottom: 15px;
 		}
@@ -85,8 +78,6 @@ template.innerHTML = `
 	</style>
 
 	<div>
-		<button id="cart">View Cart</button>
-
 		<h2>Search for Books</h2>
 		<form>
 			<label for="subject">Select subject:</label><br>
@@ -115,7 +106,6 @@ customElements.define('search-page',
 		#input = { type: '', value: '' }
 		#currentPage = 1
 		#pages
-		#cartBtn
 		#prevBtn
 		#nextBtn
 		#subject
@@ -132,7 +122,6 @@ customElements.define('search-page',
 				.appendChild(template.content.cloneNode(true))
 			
 			this.abortController = new AbortController()
-			this.#cartBtn = this.shadowRoot.getElementById('cart')
 			this.#prevBtn = this.shadowRoot.getElementById('prev')
 			this.#nextBtn = this.shadowRoot.getElementById('next')
 			this.#author = this.shadowRoot.getElementById('author')
@@ -164,8 +153,6 @@ customElements.define('search-page',
 			{ signal: this.abortController.signal })
 			this.#nextBtn.addEventListener('click', (e) => this.#getNextPage(e),
 			{ signal: this.abortController.signal })			
-			this.#cartBtn.addEventListener('click', this.#openCart, 
-			{ signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {
@@ -240,12 +227,6 @@ customElements.define('search-page',
 			pageInfo.textContent = `Page ${this.#currentPage} of ${pages}`
 			pageInfo.id = 'pageInfo'
 			this.shadowRoot.querySelector('#paginationButtons').after(pageInfo)
-		}
-
-		#openCart() {
-			this.dispatchEvent(new CustomEvent('open-cart', {
-				bubbles: true, composed: true
-			}))
 		}
 	}
 )

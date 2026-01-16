@@ -44,12 +44,18 @@ template.innerHTML = `
 		img {
 			margin: 10px 15px 10px 25px;
 		}
+
+		#cartBtn {
+			margin-inline-end: 40px;
+			margin-left: auto;
+		}
 	</style>
 
 	<div>
 		<img src="/images/books.png" alt="books"/>
 		<button id="logoutBtn">Logout</button>
 		<button id="searchBtn">Search Page</button>
+		<button id="cartBtn">View Cart</button>
 	</div>
 `
 
@@ -57,6 +63,7 @@ customElements.define('nav-bar',
 	class NavBar extends HTMLElement {
 		#logoutBtn
 		#searchBtn
+		#cartBtn
 
 		constructor() {
 			super()
@@ -67,12 +74,15 @@ customElements.define('nav-bar',
 			this.abortController = new AbortController()
 			this.#logoutBtn = this.shadowRoot.querySelector('#logoutBtn')
 			this.#searchBtn = this.shadowRoot.querySelector('#searchBtn')
+			this.#cartBtn = this.shadowRoot.querySelector('#cartBtn')
 		}
 
 		connectedCallback() {
 			this.#logoutBtn.addEventListener('click', () => this.#logout(),
 				{ signal: this.abortController.signal })
 			this.#searchBtn.addEventListener('click', () => this.#openSearch(),
+				{ signal: this.abortController.signal })
+			this.#cartBtn.addEventListener('click', () => this.#openCart(),
 				{ signal: this.abortController.signal })
 		}
 
@@ -94,6 +104,12 @@ customElements.define('nav-bar',
 
 		#openSearch() {
 			this.dispatchEvent(new CustomEvent('open-search', {
+				bubbles: true, composed: true
+			}))
+		}
+
+		#openCart() {
+			this.dispatchEvent(new CustomEvent('open-cart', {
 				bubbles: true, composed: true
 			}))
 		}

@@ -15,13 +15,14 @@ template.innerHTML = `
 		}
 
 		#invoice {
-			border: 1px solid grey;
-			border-radius: 5px;
+			border: 2px solid lightgrey;
+			border-radius: 10px;
 			align-items: center;
 			display: flex;
 			flex-direction: column;
-			gap: 10px;
+			gap: 5px;
 			width: 70%;
+			margin-bottom: 20px;
 		}
 
 		input {
@@ -49,9 +50,16 @@ template.innerHTML = `
 			background-color: lightgray;
 		}
 
-		h1, h2, p {
+		h1, h2 {
 			font-family: "Segoe UI", sans-serif;
+			margin: 20px;
 		}
+
+		p {
+			font-family: "Segoe UI", sans-serif;
+			margin: 2px;
+		}
+
 	</style>
 
 	<div id="page">

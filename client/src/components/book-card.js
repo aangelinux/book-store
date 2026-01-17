@@ -63,7 +63,7 @@ customElements.define('book-card',
 	class BookCard extends HTMLElement {
 		#info  // need to pass to user-cart component
 		#cartBtn
-		#quantityField
+		#quantity
 
 		constructor() {
 			super()
@@ -73,17 +73,13 @@ customElements.define('book-card',
 			
 			this.abortController = new AbortController()
 			this.#cartBtn = this.shadowRoot.querySelector('button')
-			this.#quantityField = this.shadowRoot.querySelector('input')
+			this.#quantity = this.shadowRoot.querySelector('input')
 		}
 
 		connectedCallback() {
 			this.#cartBtn.addEventListener('click', () => {
-				const addToCart = new CustomEvent('add-to-cart', {
-					detail: { book: this.#info, quantity: this.#quantityField.value },
-					bubbles: true, composed: true 
-				})
-				this.dispatchEvent(addToCart)}, 
-				{ signal: this.abortController.signal })
+				this.#addToCart()
+			}, { signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {
@@ -97,6 +93,17 @@ customElements.define('book-card',
 			this.shadowRoot.querySelector('#isbn').textContent = `ISBN: ${info.isbn}`
 			this.shadowRoot.querySelector('#price').textContent = `Price: ${info.price}`
 			this.shadowRoot.querySelector('#subject').textContent = `Subject: ${info.subject}`
+		}
+
+		#addToCart() {
+			if (this.#quantity.value < 1) {
+				return alert('Invalid quantity. Please select a positive number')
+			} else {
+				const addToCart = new CustomEvent('add-to-cart', {
+					detail: { book: this.#info, quantity: this.#quantity.value },
+					bubbles: true, composed: true })
+				this.dispatchEvent(addToCart)
+			}
 		}
 	}
 )

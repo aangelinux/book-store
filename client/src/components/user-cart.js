@@ -1,5 +1,5 @@
 /**
- * Web component representing a user cart.
+ * Web component representing a shopping cart.
  */
 
 import { getCart, order } from '../services/api.js'

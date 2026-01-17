@@ -1,5 +1,5 @@
 /**
- * Web component representing a form for registration.
+ * Web component representing a registration form.
  */
 
 import { register } from '../services/api.js'

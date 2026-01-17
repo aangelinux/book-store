@@ -1,6 +1,18 @@
 /**
- * All requests to the API.
+ * Fetch requests to the API.
  */
+
+export async function getUser() {
+	const res = await fetch('/auth/user')
+
+	const result = await res.json()
+  if (!res.ok) {
+    const error = new Error(result.message, result)
+    throw error
+  }
+	
+	return result	
+}
 
 export async function register(memberInfo) {
 	const res = await fetch('/auth/register', {
@@ -24,6 +36,18 @@ export async function login(memberInfo) {
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify(memberInfo)
 	})
+
+  if (!res.ok) {
+		const result = await res.json()
+    const error = new Error(result.message, result)
+    throw error
+  }
+
+	return res
+}
+
+export async function logout() {
+  const res = await fetch('/auth/logout', { method: 'POST' })
 
   if (!res.ok) {
 		const result = await res.json()
@@ -99,16 +123,4 @@ export async function getOrder(id) {
   }
 	
 	return result
-}
-
-export async function logout() {
-  const res = await fetch('/auth/logout', { method: 'POST' })
-
-  if (!res.ok) {
-		const result = await res.json()
-    const error = new Error(result.message, result)
-    throw error
-  }
-
-	return res
 }

@@ -2,7 +2,7 @@
  * Web component representing a navigation bar for authorized users.
  */
 
-import { logout } from '../services/api.js'
+import { getUser, logout } from '../services/api.js'
 
 const template = document.createElement('template')
 template.innerHTML = `
@@ -45,6 +45,15 @@ template.innerHTML = `
 			margin: 10px 15px 10px 25px;
 		}
 
+		#greeting {
+			font-family: "Segoe UI", sans-serif;
+			font-size: 1.1rem;
+			font-weight: bold;
+			justify-content: center;
+			align-self: center;
+			margin: 10px;
+		}
+
 		#cartBtn {
 			margin-inline-end: 40px;
 			margin-left: auto;
@@ -55,6 +64,7 @@ template.innerHTML = `
 		<img src="/images/books.png" alt="books"/>
 		<button id="logoutBtn">Logout</button>
 		<button id="searchBtn">Search Page</button>
+		<p id="greeting"></p>
 		<button id="cartBtn">View Cart</button>
 	</div>
 `
@@ -64,6 +74,7 @@ customElements.define('nav-bar',
 		#logoutBtn
 		#searchBtn
 		#cartBtn
+		#greeting
 
 		constructor() {
 			super()
@@ -75,9 +86,12 @@ customElements.define('nav-bar',
 			this.#logoutBtn = this.shadowRoot.querySelector('#logoutBtn')
 			this.#searchBtn = this.shadowRoot.querySelector('#searchBtn')
 			this.#cartBtn = this.shadowRoot.querySelector('#cartBtn')
+			this.#greeting = this.shadowRoot.querySelector('#greeting')
 		}
 
 		connectedCallback() {
+			this.#fetchUser()
+
 			this.#logoutBtn.addEventListener('click', () => this.#logout(),
 				{ signal: this.abortController.signal })
 			this.#searchBtn.addEventListener('click', () => this.#openSearch(),
@@ -88,6 +102,16 @@ customElements.define('nav-bar',
 
 		disconnectedCallback() {
 			this.abortController.abort()
+		}
+
+		async #fetchUser() {
+			try {
+				const { fname, lname } = await getUser()
+				this.#greeting.textContent = `Welcome, ${fname} ${lname}`
+			} catch (error) {
+				alert(error.message)
+				console.log(error)
+			}
 		}
 
 		async #logout() {

@@ -31,4 +31,11 @@ export default class Member {
 
 		return result[0]
 	}
+
+	static async findById(userId) {
+		const query = 'SELECT * FROM Members WHERE userid = ?'
+		const [result] = await db.query(query, userId)
+
+		return result[0]		
+	}
 }

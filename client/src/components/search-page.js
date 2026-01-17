@@ -1,5 +1,5 @@
 /**
- * Web component representing a search bar.
+ * Web component representing a search page.
  */
 
 import { getBooks, addToCart } from '../services/api.js'

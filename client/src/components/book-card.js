@@ -61,7 +61,7 @@ template.innerHTML = `
 
 customElements.define('book-card', 
 	class BookCard extends HTMLElement {
-		#info  // needed to pass to user-cart component
+		#info  // need to pass to user-cart component
 		#cartBtn
 		#quantityField
 
@@ -80,10 +80,10 @@ customElements.define('book-card',
 			this.#cartBtn.addEventListener('click', () => {
 				const addToCart = new CustomEvent('add-to-cart', {
 					detail: { book: this.#info, quantity: this.#quantityField.value },
-					bubbles: true, composed: true
+					bubbles: true, composed: true 
 				})
-				this.dispatchEvent(addToCart)
-			}, { signal: this.abortController.signal })
+				this.dispatchEvent(addToCart)}, 
+				{ signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {

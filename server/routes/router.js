@@ -4,13 +4,14 @@
 
 import express from 'express'
 import { validate } from '../middleware/regValidation.js'
-import { login, logout, register } from '../controllers/auth.js'
+import { getUser, login, logout, register } from '../controllers/auth.js'
 import { getSubject, getAuthor, getTitle } from '../controllers/book.js'
 import { getCart, addToCart } from '../controllers/cart.js'
 import { getOrder, order } from '../controllers/order.js'
 
 const router = express.Router()
 
+router.get('/auth/user', getUser)
 router.post('/auth/login', login)
 router.post('/auth/register', validate, register)
 router.post('/auth/logout', logout)

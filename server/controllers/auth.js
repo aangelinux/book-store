@@ -5,7 +5,6 @@
 import { validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
 import Member from '../models/member.js'
-import Cart from '../models/cart.js'
 
 function isValid(req, res) {
   const errors = validationResult(req)
@@ -59,14 +58,19 @@ export async function login(req, res, next) {
 
 export async function logout(req, res, next) {
 	if (!req.session) return res.status(404).json({ message: 'User not logged in' })
-		
-	try {
-		await Cart.delete(req.session.userId)
-	} catch (error) {
-		next(error)
-	}
 
 	req.session.destroy(() => {
 		res.status(200).end()
 	})
+}
+
+export async function getUser(req, res, next) {
+	const userId = req.session.userId
+
+	try {
+		const { fname, lname } = await Member.findById(userId)
+		res.status(200).json({ fname, lname })
+	} catch (error) {
+		next(error)
+	}
 }

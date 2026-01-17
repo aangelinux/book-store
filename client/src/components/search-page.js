@@ -163,7 +163,7 @@ customElements.define('search-page',
 			try {
 				await addToCart({ isbn: details.book.isbn, quantity: details.quantity })
 			} catch (error) {
-				alert(error.message)
+				Swal.fire({ text: error.message })
 				console.log(error)
 			}
 		}
@@ -199,7 +199,7 @@ customElements.define('search-page',
 				this.#createListing(books)
 				this.#updatePageInfo(pages)
 			} catch (error) {
-				alert(error.message)
+				Swal.fire({ text: error.message })
 				console.log(error)
 			}
 		}

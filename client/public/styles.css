@@ -2,3 +2,8 @@ body {
 	height: 100vh;
 	margin: 0;
 }
+
+.swal2-popup {
+	font-size: 1rem;
+	font-family: "Segoe UI", sans-serif;
+}

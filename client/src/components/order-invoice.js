@@ -126,7 +126,7 @@ customElements.define('order-invoice',
 				const order = await getOrder(ono)
 				this.#render(order)
 			} catch (error) {
-				alert(error.message)
+				Swal.fire({ text: error.message })
 				console.log(error)
 			}
 		}

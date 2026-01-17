@@ -121,7 +121,7 @@ customElements.define('login-form',
 				this.dispatchEvent(
 					new CustomEvent('open-search', { bubbles: true, composed: true }))
 			} catch (error) {
-				alert(error.message)
+				Swal.fire({ text: error.message })
 				console.log(error)
 			}
 		}

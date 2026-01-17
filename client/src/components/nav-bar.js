@@ -109,7 +109,7 @@ customElements.define('nav-bar',
 				const { fname, lname } = await getUser()
 				this.#greeting.textContent = `Welcome, ${fname} ${lname}`
 			} catch (error) {
-				alert(error.message)
+				Swal.fire({ text: error.message })
 				console.log(error)
 			}
 		}
@@ -121,7 +121,7 @@ customElements.define('nav-bar',
 					bubbles: true, composed: true
 				}))
 			} catch (error) {
-				alert(error.message)
+				Swal.fire({ text: error.message })
 				console.log(error)
 			}
 		}

@@ -98,7 +98,7 @@ customElements.define('book-card',
 
 		#addToCart() {
 			if (this.#quantity.value < 1) {
-				return alert('Invalid quantity. Please select a positive number')
+				return Swal.fire({ text: 'Invalid quantity. Please select a positive number' })
 			} else {
 				const addToCart = new CustomEvent('add-to-cart', {
 					detail: { book: this.#info, quantity: this.#quantity.value },

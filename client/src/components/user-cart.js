@@ -146,7 +146,7 @@ customElements.define('user-cart',
 					detail: ono, bubbles: true, composed: true
 				}))
 			} catch (error) {
-				alert(error.message)
+				Swal.fire({ text: error.message })
 				console.log(error)
 			}
 		}

@@ -2,6 +2,7 @@
  * Web component representing a book card.
  */
 
+
 const template = document.createElement('template')
 template.innerHTML = `
 	<style>
@@ -103,6 +104,13 @@ customElements.define('book-card',
 					detail: { book: this.#info, quantity: this.#quantity.value },
 					bubbles: true, composed: true })
 				this.dispatchEvent(addToCart)
+				Swal.fire({
+					position: "top-end",
+					icon: "success",
+					title: "Book has been saved to cart",
+					showConfirmButton: false,
+					timer: 1000
+				})
 			}
 		}
 	}

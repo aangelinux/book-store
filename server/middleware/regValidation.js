@@ -26,7 +26,7 @@ export const validate = [
     .isLength({ max: 30 }).withMessage('City cannot be longer than 30 chars'),
 
   body('zip')
-		.trim()
+		.customSanitizer(value => value.replace(/\s+/g, ''))
     .notEmpty().withMessage('ZIP code required')
 		.isPostalCode('SE').withMessage('Invalid ZIP code')
 		.toInt(),

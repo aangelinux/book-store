@@ -58,10 +58,19 @@ template.innerHTML = `
 			background-color: #07c;
 			cursor: pointer;
 		}
+
+		#back {
+			position: fixed;
+			top: 10px;
+			left: 10px;
+			width: 150px;
+			height: 40px;
+		}
 	</style>
 
 	<div>
 		<h2>Log In</h2>
+		<button id="back">Back to Home</button>
 		<form>
 			<label for="email">Email:</label><br>
 			<input type="text" id="email" name="email"><br>
@@ -77,6 +86,7 @@ customElements.define('login-form',
 		#email
 		#password
 		#loginBtn
+		#backBtn
 
 		constructor() {
 			super()
@@ -88,11 +98,15 @@ customElements.define('login-form',
 			this.#email = this.shadowRoot.getElementById('email')
 			this.#password = this.shadowRoot.getElementById('password')
 			this.#loginBtn = this.shadowRoot.getElementById('login')
+			this.#backBtn = this.shadowRoot.getElementById('back')
 		}
 
 		connectedCallback() {
 			this.#loginBtn.addEventListener('click', () => this.#login(),
 				{ signal: this.abortController.signal })
+			this.#backBtn.addEventListener('click', () => {
+				this.dispatchEvent(new CustomEvent('open-home', { bubbles: true, composed: true }))
+			}, { signal: this.abortController.signal })
 		}
 
 		disconnectedCallback() {

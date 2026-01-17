@@ -58,10 +58,19 @@ template.innerHTML = `
 			background-color: #07c;
 			cursor: pointer;
 		}
+
+		#back {
+			position: fixed;
+			top: 10px;
+			left: 10px;
+			width: 150px;
+			height: 40px;
+		}
 	</style>
 
 	<div>
 		<h2>Register</h2>
+		<button id="back">Back to Home</button>
 		<form>
 			<label for="fname">First name:</label><br>
 			<input type="text" id="fname" name="fname"><br>
@@ -94,6 +103,7 @@ template.innerHTML = `
 customElements.define('register-form', 
 	class RegisterForm extends HTMLElement {
 		#registerBtn
+		#backBtn
 
 		constructor() {
 			super()
@@ -103,12 +113,17 @@ customElements.define('register-form',
 			
 			this.abortController = new AbortController()
 			this.#registerBtn = this.shadowRoot.getElementById('registerBtn')
+			this.#backBtn = this.shadowRoot.getElementById('back')
 		}
 
 		connectedCallback() {
 			this.#registerBtn.addEventListener('click', () => {
 				const memberInfo = this.#getFormInput()
 				this.#register(memberInfo)
+			}, { signal: this.abortController.signal })
+			
+			this.#backBtn.addEventListener('click', () => {
+				this.dispatchEvent(new CustomEvent('open-home', { bubbles: true, composed: true }))
 			}, { signal: this.abortController.signal })
 		}
 

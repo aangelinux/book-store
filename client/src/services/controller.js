@@ -21,7 +21,8 @@ document.addEventListener('add-navbar', () => {
 })
 
 document.addEventListener('open-home', () => {
-	document.querySelector('nav-bar').remove()
+	const navBar = document.querySelector('nav-bar')
+	if (navBar) navBar.remove()
 	const homePage = document.createElement('home-page')
 	show(homePage)
 })

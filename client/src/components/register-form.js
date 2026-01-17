@@ -151,10 +151,25 @@ customElements.define('register-form',
 					new CustomEvent('add-navbar', { bubbles: true, composed: true }))
 				this.dispatchEvent(
 					new CustomEvent('open-search', { bubbles: true, composed: true }))
+				this.#notify()
 			} catch (error) {
 				Swal.fire({ text: error.message, icon: 'warning' })
 				console.log(error)
 			}
+		}
+
+		#notify() {
+			const Toast = Swal.mixin({
+				toast: true,
+				position: "top-end",
+				showConfirmButton: false,
+				timer: 3000,
+				timerProgressBar: false
+			})
+			Toast.fire({
+				icon: "success",
+				title: "Account created successfully"
+			})
 		}
 	}
 )

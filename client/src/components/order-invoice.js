@@ -55,6 +55,10 @@ template.innerHTML = `
 			margin: 20px;
 		}
 
+		h3 {
+			font-family: "Segoe UI", sans-serif;
+		}
+
 		p {
 			font-family: "Segoe UI", sans-serif;
 			margin: 2px;
@@ -78,6 +82,7 @@ template.innerHTML = `
 					<th>Quantity</th>
 				</tr>
 			</table>
+			<h3 id="delivery">Estimated delivery:</h3>
 			<h2 id="total">Order Total:</h2>
 		</div>
 	</div>
@@ -89,6 +94,7 @@ customElements.define('order-invoice',
 		#name
 		#address
 		#table
+		#delivery
 		#total
 
 		constructor() {
@@ -102,6 +108,7 @@ customElements.define('order-invoice',
 			this.#name = this.shadowRoot.querySelector('#name')
 			this.#address = this.shadowRoot.querySelector('#address')
 			this.#table = this.shadowRoot.querySelector('table')
+			this.#delivery = this.shadowRoot.querySelector('#delivery')
 			this.#total = this.shadowRoot.querySelector('#total')
 		}
 
@@ -135,6 +142,11 @@ customElements.define('order-invoice',
 			this.#name.textContent = `Name: ${order.fname} ${order.lname}`
 			this.#address.textContent = 
 			`Address: ${order.shipAddress}, ${order.shipCity} ${order.shipZip}`
+
+			const deliveryDate = new Date(order.created)
+			deliveryDate.setDate(deliveryDate.getDate() + 7)
+
+			this.#delivery.textContent = `Estimated delivery: ${deliveryDate.toDateString()}`
 		}
 
 		#renderBooks(orderDetails) {

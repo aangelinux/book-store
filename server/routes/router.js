@@ -1,5 +1,5 @@
 /**
- * The API's endpoints.
+ * Endpoints to the API.
  */
 
 import express from 'express'

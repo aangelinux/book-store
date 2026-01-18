@@ -32,7 +32,7 @@ export const validate = [
 		.toInt(),
 
   body('phone')
-    .optional()
+    .optional({checkFalsy: true})
     .trim()
     .isMobilePhone().withMessage('Invalid phone number')
     .isLength({ max: 15 }).withMessage('Phone number cannot be longer than 15 chars'),

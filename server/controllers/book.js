@@ -1,5 +1,5 @@
 /**
- * Retrieves books from the database.
+ * Retrieves books and the total number of pages from the database.
  */
 
 import Book from '../models/book.js'

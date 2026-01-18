@@ -1,5 +1,5 @@
 /**
- * Represents an Order entity.
+ * Queries to the Orders table.
  */
 
 import db from '../config/db.js'

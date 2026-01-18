@@ -1,5 +1,5 @@
 /**
- * Represents a Member entity.
+ * Queries to the Members table.
  */
 
 import db from '../config/db.js'

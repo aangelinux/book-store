@@ -19,7 +19,7 @@ export async function order(req, res, next) {
 		await ODetails.insert({ ono, items })
 		await Cart.delete(user)
 		
-		res.status(201).json(ono)
+		res.status(201).json(ono) //return order number for the invoice
 	} catch (error) {
 		next(error)
 	}

@@ -1,5 +1,5 @@
 /**
- * Represents a Book entity.
+ * Queries to the Books table.
  */
 
 import db from '../config/db.js'

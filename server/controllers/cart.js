@@ -1,5 +1,5 @@
 /**
- * Handles user's shopping cart.
+ * Handles the user's shopping cart.
  */
 
 import Cart from '../models/cart.js'
